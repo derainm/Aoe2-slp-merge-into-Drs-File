@@ -1,0 +1,9 @@
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\bin\Release\Resources\RH.exe
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\bin\Release\Aoe2 slp merge into Drs File.exe
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\bin\Release\Aoe2 slp merge into Drs File.pdb
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Release\Aoe2_slp_merge_into_Drs_File.Form1.resources
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Release\Aoe2_slp_merge_into_Drs_File.Properties.Resources.resources
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Release\Aoe2 slp merge into Drs File.csproj.GenerateResource.cache
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Release\Aoe2 slp merge into Drs File.csproj.CoreCompileInputs.cache
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Release\Aoe2 slp merge into Drs File.exe
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Release\Aoe2 slp merge into Drs File.pdb

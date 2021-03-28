@@ -1,0 +1,5 @@
+[FILENAMES]
+Open="C:\Users\m\Desktop\language\language_x1_p1.dll"
+Save="C:\Users\m\Desktop\language\language_x1_p1.dll"
+[COMMANDS]
+-addoverwrite resources.res , STRINGTABLE,,

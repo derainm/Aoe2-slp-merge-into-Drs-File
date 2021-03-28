@@ -1,0 +1,10 @@
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\bin\Debug\Aoe2 slp merge into Drs File.exe
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\bin\Debug\Aoe2 slp merge into Drs File.pdb
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Debug\Aoe2 slp merge into Drs File.csprojAssemblyReference.cache
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Debug\Aoe2_slp_merge_into_Drs_File.Form1.resources
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Debug\Aoe2_slp_merge_into_Drs_File.Properties.Resources.resources
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Debug\Aoe2 slp merge into Drs File.csproj.GenerateResource.cache
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Debug\Aoe2 slp merge into Drs File.csproj.CoreCompileInputs.cache
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Debug\Aoe2 slp merge into Drs File.exe
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\obj\Debug\Aoe2 slp merge into Drs File.pdb
+C:\Users\m\source\repos\Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File\bin\Debug\Resources\RH.exe

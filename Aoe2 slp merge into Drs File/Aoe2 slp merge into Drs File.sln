@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoe2 slp merge into Drs File", "Aoe2 slp merge into Drs File\Aoe2 slp merge into Drs File.csproj", "{D10B2CFF-435A-4A9B-968C-382FF31E958B}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Aoe2 slp merger drs Tool", "Aoe2 slp merger drs Tool\Aoe2 slp merger drs Tool.vdproj", "{ACD6DCCD-E848-4125-B49B-8B367489A8F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D10B2CFF-435A-4A9B-968C-382FF31E958B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D10B2CFF-435A-4A9B-968C-382FF31E958B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D10B2CFF-435A-4A9B-968C-382FF31E958B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D10B2CFF-435A-4A9B-968C-382FF31E958B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD6DCCD-E848-4125-B49B-8B367489A8F0}.Debug|Any CPU.ActiveCfg = Debug
+		{ACD6DCCD-E848-4125-B49B-8B367489A8F0}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D680E8E-80B3-48DB-908C-7493911C6AEE}
+	EndGlobalSection
+EndGlobal
