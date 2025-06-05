@@ -145,7 +145,7 @@ namespace voobly_drs_merger
                         return;
                     if (this.datamodsSelected.Count == 0)
                     {
-                        int num6 = (int)MessageBox.Show("Chose a Data Mods !!!");
+                        MessageBox.Show("Chose a Data Mods !!!");
                     }
                     else
                     {
@@ -165,14 +165,14 @@ namespace voobly_drs_merger
                     if (((Control)control).Text == "Your local Aoe2")
                     {
                         this.datamodsSelected.Add(Path.Combine(this.Aoe2Path, "Data"));
-                        List<string> list = ((IEnumerable<string>)Directory.GetFiles(this.datamodsSelected.First<string>())).Where<string>((Func<string, bool>)(x => x.EndsWith(".drs"))).ToList<string>();
+                        List<string> list = Directory.GetFiles(this.datamodsSelected.First()).Where(x => x.EndsWith(".drs")).ToList();
                         this.form_ = new Form();
                         int num1 = 0;
                         foreach (string str in list)
                         {
                             RadioButton radioButton = new RadioButton();
-                            radioButton.Tag = (object)(((IEnumerable<string>)str.Split('\\')).Last<string>() + num1.ToString());
-                            radioButton.Text = ((IEnumerable<string>)str.Split('\\')).Last<string>();
+                            radioButton.Tag = str.Split('\\').Last() + num1.ToString();
+                            radioButton.Text = str.Split('\\').Last();
                             radioButton.AutoSize = true;
                             radioButton.Location = new Point(10, num1 * 20);
                             this.form_.Controls.Add((Control)radioButton);
@@ -185,26 +185,18 @@ namespace voobly_drs_merger
                         button.AutoSize = true;
                         button.Size = new Size(123, 49);
                         int num2 = num1 + 1;
-                        button.Location = new Point(10, num2 * 21);
-                        //CheckBox checkBox = new CheckBox();
-                        //checkBox.Text = "is Only Update slp";
-                        //checkBox.Name = "isOnlyUpdatechb";
-                        //checkBox.Tag = (object)"validation";
-                        //checkBox.Location = new Point(210, num2 * 21);
+                        button.Location = new Point(10, num2 * 21); 
                         button.Click += new EventHandler(this.buttonDrsChoice_Click);
-                        this.form_.Controls.Add((Control)button);
-                        //this.form_.Controls.Add((Control)checkBox);
+                        this.form_.Controls.Add((Control)button); 
                         this.form_.StartPosition = FormStartPosition.CenterScreen;
                         this.form_.MinimumSize = new Size(400, 400);
                         this.form_.AutoScroll = true;
                         if (this.form_.ShowDialog() == DialogResult.OK)
                         {
-                            string drsffile = Path.Combine(this.datamodsSelected.First<string>(), this.lstDrsSelected.First<string>());
+                            string drsffile = Path.Combine(this.datamodsSelected.First(), this.lstDrsSelected.First());
                             Cursor.Current = Cursors.WaitCursor;
-                            ////foreach (string selectdMod in this.selectedMods)
-                            ////    this.mergeVooblymodsToDataGame(Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Local Mods", selectdMod, "drs"), drsffile, checkBox.Checked);
                             Cursor.Current = Cursors.Default;
-                            int num3 = (int)MessageBox.Show("Done.");
+                            MessageBox.Show("Done.");
                             this.lstDrsSelected.Clear();
                         }
                         this.form_.Dispose();
@@ -212,14 +204,14 @@ namespace voobly_drs_merger
                     else
                     {
                         this.datamodsSelected.Add(Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Data Mods", ((Control)control).Text, "Data"));
-                        List<string> list = ((IEnumerable<string>)Directory.GetFiles(this.datamodsSelected.First<string>())).Where<string>((Func<string, bool>)(x => x.EndsWith(".drs"))).ToList<string>();
+                        List<string> list = Directory.GetFiles(this.datamodsSelected.First()).Where(x => x.EndsWith(".drs")).ToList();
                         this.form_ = new Form();
                         int num4 = 0;
                         foreach (string str in list)
                         {
                             RadioButton radioButton = new RadioButton();
-                            radioButton.Tag = (object)(((IEnumerable<string>)str.Split('\\')).Last<string>() + num4.ToString());
-                            radioButton.Text = ((IEnumerable<string>)str.Split('\\')).Last<string>();
+                            radioButton.Tag = str.Split('\\').Last() + num4.ToString();
+                            radioButton.Text = str.Split('\\').Last();
                             radioButton.AutoSize = true;
                             radioButton.Location = new Point(10, num4 * 20);
                             this.form_.Controls.Add((Control)radioButton);
@@ -240,7 +232,7 @@ namespace voobly_drs_merger
                         this.form_.AutoScroll = true;
                         if (this.form_.ShowDialog() == DialogResult.OK)
                         {
-                            string drsffile = Path.Combine(this.datamodsSelected.First<string>(), this.lstDrsSelected.First<string>());
+                            string drsffile = Path.Combine(this.datamodsSelected.First(), this.lstDrsSelected.First());
                             string saveDrs = drsffile.Replace(".drs", "_Original.drs");
                             if (!File.Exists(saveDrs))
                             {
@@ -253,7 +245,7 @@ namespace voobly_drs_merger
                                 DrsUtilities.mergeFileIntoDrs(dir, drsffile);
                             }
                             Cursor.Current = Cursors.Default;
-                            int num6 = (int)MessageBox.Show("Done.");
+                            MessageBox.Show("Done.");
                             this.lstDrsSelected.Clear();
                         }
                         this.form_.Dispose();
