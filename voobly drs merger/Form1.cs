@@ -30,19 +30,32 @@ namespace voobly_drs_merger
 
         private void buttonBrowserSlpDir_Click(object sender, EventArgs e)
         {
-            if(FileDialog.ShowDialog() == DialogResult.OK)
+            if (FolderDialog.ShowDialog(this)==DialogResult.OK)
             {
-                drsPath = FileDialog.FileName;
-                textBoxSlpDire.Text = drsPath;
+                slpPath = FolderDialog.SelectedPath;
+                if (string.IsNullOrEmpty(slpPath))
+                {
+                    MessageBox.Show("File is empty");
+                    textBoxSlpDir.Text = string.Empty;
+                    return;
+                }  
+                textBoxSlpDir.Text = slpPath;
             }
         }
 
         private void buttonBrowserDrs_Click(object sender, EventArgs e)
-        {
-            if (FolderDialog.ShowDialog(this)==DialogResult.OK)
+        { 
+            FileDialog.Filter = "Drs files (*.drs)|*.drs";
+            if (FileDialog.ShowDialog() == DialogResult.OK)
             {
-                slpPath = FolderDialog.SelectedPath;
-                textBoxdrsBrowser.Text = slpPath;
+                drsPath = FileDialog.FileName;
+                if(string.IsNullOrEmpty(drsPath))
+                {
+                    MessageBox.Show("File is empty");
+                    textBoxdrsBrowser.Text = string.Empty;
+                    return;
+                } 
+                textBoxdrsBrowser.Text = drsPath;
             }
         }
         private void removeTextBowModWhenRebrowserGame()
@@ -268,7 +281,7 @@ namespace voobly_drs_merger
             }
             if (num1 == 0)
             {
-                int num2 = (int)MessageBox.Show("chose a DRS File to merge Voobly mod !!");
+                MessageBox.Show("chose a DRS File to merge Voobly mod !!");
             }
             else
                 this.form_.DialogResult = DialogResult.OK;
@@ -277,6 +290,24 @@ namespace voobly_drs_merger
         private void button5_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonMergeSlpIntoDrs_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            if(string.IsNullOrEmpty(slpPath))
+            {
+                MessageBox.Show("Browser a Aoe2 mod folder!");
+                return;
+            }
+            if (string.IsNullOrEmpty(drsPath))
+            {
+                MessageBox.Show("Browser a Aoe2 drs file!");
+                return;
+            }
+            DrsUtilities.mergeFileIntoDrs(slpPath,drsPath) ;
+            Cursor.Current = Cursors.Default;
+            MessageBox.Show("Done.");
         }
     }
 }

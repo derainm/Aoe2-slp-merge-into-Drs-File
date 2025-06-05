@@ -29,12 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.textBoxSlpDire = new System.Windows.Forms.TextBox();
+            this.textBoxSlpDir = new System.Windows.Forms.TextBox();
             this.textBoxdrsBrowser = new System.Windows.Forms.TextBox();
-            this.buttonBrowserSlpDir = new System.Windows.Forms.Button();
-            this.buttonMergeSlpIntoDrs = new System.Windows.Forms.Button();
             this.buttonBrowserDrs = new System.Windows.Forms.Button();
-            this.checkBoxisUpdateOnlyy = new System.Windows.Forms.CheckBox();
+            this.buttonMergeSlpIntoDrs = new System.Windows.Forms.Button();
+            this.buttonBrowserSlpDir = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.VooblyMods = new System.Windows.Forms.TabPage();
             this.SlpIntoDrs = new System.Windows.Forms.TabPage();
@@ -47,14 +46,14 @@
             this.SlpIntoDrs.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBoxSlpDire
+            // textBoxSlpDir
             // 
-            this.textBoxSlpDire.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.textBoxSlpDire.Location = new System.Drawing.Point(262, 177);
-            this.textBoxSlpDire.Name = "textBoxSlpDire";
-            this.textBoxSlpDire.ReadOnly = true;
-            this.textBoxSlpDire.Size = new System.Drawing.Size(412, 20);
-            this.textBoxSlpDire.TabIndex = 14;
+            this.textBoxSlpDir.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textBoxSlpDir.Location = new System.Drawing.Point(262, 177);
+            this.textBoxSlpDir.Name = "textBoxSlpDir";
+            this.textBoxSlpDir.ReadOnly = true;
+            this.textBoxSlpDir.Size = new System.Drawing.Size(613, 20);
+            this.textBoxSlpDir.TabIndex = 14;
             // 
             // textBoxdrsBrowser
             // 
@@ -62,23 +61,23 @@
             this.textBoxdrsBrowser.Location = new System.Drawing.Point(262, 117);
             this.textBoxdrsBrowser.Name = "textBoxdrsBrowser";
             this.textBoxdrsBrowser.ReadOnly = true;
-            this.textBoxdrsBrowser.Size = new System.Drawing.Size(412, 20);
+            this.textBoxdrsBrowser.Size = new System.Drawing.Size(613, 20);
             this.textBoxdrsBrowser.TabIndex = 13;
             // 
-            // buttonBrowserSlpDir
+            // buttonBrowserDrs
             // 
-            this.buttonBrowserSlpDir.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.buttonBrowserSlpDir.Cursor = System.Windows.Forms.Cursors.Default;
-            this.buttonBrowserSlpDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonBrowserSlpDir.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonBrowserSlpDir.Location = new System.Drawing.Point(84, 98);
-            this.buttonBrowserSlpDir.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.buttonBrowserSlpDir.Name = "buttonBrowserSlpDir";
-            this.buttonBrowserSlpDir.Size = new System.Drawing.Size(138, 49);
-            this.buttonBrowserSlpDir.TabIndex = 11;
-            this.buttonBrowserSlpDir.Text = "Browser drs file";
-            this.buttonBrowserSlpDir.UseVisualStyleBackColor = false;
-            this.buttonBrowserSlpDir.Click += new System.EventHandler(this.buttonBrowserSlpDir_Click);
+            this.buttonBrowserDrs.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.buttonBrowserDrs.Cursor = System.Windows.Forms.Cursors.Default;
+            this.buttonBrowserDrs.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBrowserDrs.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonBrowserDrs.Location = new System.Drawing.Point(84, 98);
+            this.buttonBrowserDrs.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.buttonBrowserDrs.Name = "buttonBrowserDrs";
+            this.buttonBrowserDrs.Size = new System.Drawing.Size(138, 49);
+            this.buttonBrowserDrs.TabIndex = 11;
+            this.buttonBrowserDrs.Text = "Browser drs file";
+            this.buttonBrowserDrs.UseVisualStyleBackColor = false;
+            this.buttonBrowserDrs.Click += new System.EventHandler(this.buttonBrowserDrs_Click);
             // 
             // buttonMergeSlpIntoDrs
             // 
@@ -92,32 +91,21 @@
             this.buttonMergeSlpIntoDrs.TabIndex = 12;
             this.buttonMergeSlpIntoDrs.Text = "Merge slp into drs ";
             this.buttonMergeSlpIntoDrs.UseVisualStyleBackColor = false;
+            this.buttonMergeSlpIntoDrs.Click += new System.EventHandler(this.buttonMergeSlpIntoDrs_Click);
             // 
-            // buttonBrowserDrs
+            // buttonBrowserSlpDir
             // 
-            this.buttonBrowserDrs.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.buttonBrowserDrs.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonBrowserDrs.ForeColor = System.Drawing.Color.Cornsilk;
-            this.buttonBrowserDrs.Location = new System.Drawing.Point(84, 153);
-            this.buttonBrowserDrs.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.buttonBrowserDrs.Name = "buttonBrowserDrs";
-            this.buttonBrowserDrs.Size = new System.Drawing.Size(138, 49);
-            this.buttonBrowserDrs.TabIndex = 10;
-            this.buttonBrowserDrs.Text = "Browser slp directory";
-            this.buttonBrowserDrs.UseVisualStyleBackColor = false;
-            this.buttonBrowserDrs.Click += new System.EventHandler(this.buttonBrowserDrs_Click);
-            // 
-            // checkBoxisUpdateOnlyy
-            // 
-            this.checkBoxisUpdateOnlyy.AutoSize = true;
-            this.checkBoxisUpdateOnlyy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxisUpdateOnlyy.ForeColor = System.Drawing.Color.AliceBlue;
-            this.checkBoxisUpdateOnlyy.Location = new System.Drawing.Point(242, 229);
-            this.checkBoxisUpdateOnlyy.Name = "checkBoxisUpdateOnlyy";
-            this.checkBoxisUpdateOnlyy.Size = new System.Drawing.Size(131, 24);
-            this.checkBoxisUpdateOnlyy.TabIndex = 18;
-            this.checkBoxisUpdateOnlyy.Text = "is Update Only";
-            this.checkBoxisUpdateOnlyy.UseVisualStyleBackColor = true;
+            this.buttonBrowserSlpDir.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.buttonBrowserSlpDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBrowserSlpDir.ForeColor = System.Drawing.Color.Cornsilk;
+            this.buttonBrowserSlpDir.Location = new System.Drawing.Point(84, 153);
+            this.buttonBrowserSlpDir.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.buttonBrowserSlpDir.Name = "buttonBrowserSlpDir";
+            this.buttonBrowserSlpDir.Size = new System.Drawing.Size(138, 49);
+            this.buttonBrowserSlpDir.TabIndex = 10;
+            this.buttonBrowserSlpDir.Text = "Browser slp directory";
+            this.buttonBrowserSlpDir.UseVisualStyleBackColor = false;
+            this.buttonBrowserSlpDir.Click += new System.EventHandler(this.buttonBrowserSlpDir_Click);
             // 
             // tabControl1
             // 
@@ -146,10 +134,9 @@
             // SlpIntoDrs
             // 
             this.SlpIntoDrs.BackColor = System.Drawing.Color.SteelBlue;
-            this.SlpIntoDrs.Controls.Add(this.buttonBrowserSlpDir);
-            this.SlpIntoDrs.Controls.Add(this.checkBoxisUpdateOnlyy);
             this.SlpIntoDrs.Controls.Add(this.buttonBrowserDrs);
-            this.SlpIntoDrs.Controls.Add(this.textBoxSlpDire);
+            this.SlpIntoDrs.Controls.Add(this.buttonBrowserSlpDir);
+            this.SlpIntoDrs.Controls.Add(this.textBoxSlpDir);
             this.SlpIntoDrs.Controls.Add(this.buttonMergeSlpIntoDrs);
             this.SlpIntoDrs.Controls.Add(this.textBoxdrsBrowser);
             this.SlpIntoDrs.Location = new System.Drawing.Point(4, 22);
@@ -237,12 +224,11 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBoxSlpDire;
+        private System.Windows.Forms.TextBox textBoxSlpDir;
         private System.Windows.Forms.TextBox textBoxdrsBrowser;
-        private System.Windows.Forms.Button buttonBrowserSlpDir;
-        private System.Windows.Forms.Button buttonMergeSlpIntoDrs;
         private System.Windows.Forms.Button buttonBrowserDrs;
-        private System.Windows.Forms.CheckBox checkBoxisUpdateOnlyy;
+        private System.Windows.Forms.Button buttonMergeSlpIntoDrs;
+        private System.Windows.Forms.Button buttonBrowserSlpDir;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage VooblyMods;
         private System.Windows.Forms.TabPage SlpIntoDrs;
