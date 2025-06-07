@@ -81,43 +81,74 @@ namespace voobly_drs_merger
             return DrsTableCount*12 + 64;
         }
 
-
-        public static void DecodeVooblySLP(
-          string originalFile,
-          string newSLPFile,
-          bool overwrite)
-        {
-            //FileStream fs,
-            FileStream fs = File.Open(newSLPFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-
-            FileStream fileStream = File.Open(newSLPFile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
-            int int32 = Convert.ToInt32(fs.Length - 4L);
-            byte[] buffer = new byte[int32];
-            fs.Read(buffer, 0, int32);
-            for (int index = 0; index < int32; ++index)
-                buffer[index] = (32 /*0x20*/ * ((int)buffer[index] - 17 ^ 35) | (int)(byte)((int)buffer[index] - 17 ^ 35) >> 3).ToByte();
-            fileStream.Write(buffer, 0, int32);
-            fileStream.SetLength((long)int32);
-            fs.Close();
-            fileStream.Close();
-            if (!overwrite)
-                return;
-            if (File.Exists(originalFile))
-                File.Delete(originalFile);
-            if (!File.Exists(newSLPFile))
-                return;
-            File.Move(newSLPFile, originalFile);
-        }
-
+ 
         public static bool isVoolbyCodedSlp(string filePath)
         {
             bool res = false;
             FileStream fileStream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            res = fileStream.ReadUInt32() == 3203339063U;
+            res = fileStream.ReadUInt32() ==0xBEEF1337;// 3203339063U;
             fileStream.Close();
             return res;
         }
-
+        public static byte[] DecodeVooblySLP(string pathFile )
+        {
+            //https://github.com/withmorten/vooblyslpdecode
+            /*
+              uchar *fslp;
+                uint beef1337;
+                int fsize, i;
+                FILE *f;
+    
+                if(argc < 3) {
+                    fprintf(stderr, "usage: vooblyslpdecode slp_in.slp slp_out.slp\n");
+                    return 1;
+                }
+    
+                f = fopen_f(argv[1], "rb");
+                fread(&beef1337, 1, 4, f);
+    
+                if(beef1337 != 0xBEEF1337) {
+                    fprintf(stderr, "error: not a voobly encoded slp file\n");
+                    return 1;
+                }
+    
+                fseek(f, 0, SEEK_END);
+                fsize = ftell(f) - 4;
+                fseek(f, 4, SEEK_SET);
+    
+                fslp = malloc(fsize);
+                fread(fslp, 1, fsize, f);
+                fclose(f);
+    
+                for(i = 0; i < fsize; i++)
+                    fslp[i] = 0x20 * ((fslp[i] - 17) ^ 0x23) | ((uchar)((fslp[i] - 17) ^ 0x23) >> 3);
+    
+                f = fopen_f(argv[2], "wb");
+                fwrite(fslp, 1, fsize, f);
+                fclose(f);
+             */
+            byte[] decodedBytes = null;
+            using (FileStream fs = new FileStream(pathFile, FileMode.Open, FileAccess.Read))
+            using (BinaryReader br = new BinaryReader(fs))
+            { 
+                uint beef1337 = br.ReadUInt32(); 
+                if (beef1337 != 0xBEEF1337)
+                {
+                    return null;
+                } 
+                int fsize = (int)(fs.Length - 4);
+                if (fsize < 0) fsize = 0; 
+                byte[] fslp = br.ReadBytes(fsize);  
+                for (int i = 0; i < fsize; i++)
+                {
+                    // Original C code: fslp[i] = 0x20 * ((fslp[i] - 17) ^ 0x23) | ((uchar)((fslp[i] - 17) ^ 0x23) >> 3);
+                    byte intermediate = (byte)((fslp[i] - 17) ^ 0x23);
+                    fslp[i] = (byte)(0x20 * intermediate | (intermediate >> 3));
+                }
+                decodedBytes  =fslp;
+            } 
+            return decodedBytes;
+        } 
 
         /// <summary>
         /// Parse drs file into DrsTable object
@@ -287,34 +318,40 @@ namespace voobly_drs_merger
         private static void appendDrsToList(int type, uint id, string f , DrsFile drs)
         {
             List<DrsItem> DrsItems = drs.listDrsTable.Where(x => x.Type == type).First().Items.ToList();
+            byte[] buffer;
             if (isVoolbyCodedSlp(f))
             {
-                string extention = getFileExtention(type);
-                DrsUtilities.DecodeVooblySLP(f, f.Replace(extention, "_d"+extention), false);
+                buffer = DecodeVooblySLP(f);
             }
-            byte[] buffer = File.ReadAllBytes(f);
+            else
+            { 
+                buffer = File.ReadAllBytes(f);
+            }
             var last = DrsItems.LastOrDefault();
             if(last == null)
             {
                 last =drs.listDrsTable.Where(x => x.Items.Count()>0).FirstOrDefault().Items.LastOrDefault();
             }
-            if (!DrsItems.Exists(x => x.Id == id))
+            if (buffer!=null)
             {
-                DrsItems.Add(new DrsItem()
+                if (!DrsItems.Exists(x => x.Id == id))
                 {
-                    Id = id,
-                    Data = buffer,
-                    Size = (uint)buffer.Length,
-                    Start = last.Start + last.Size,
-                });
+                    DrsItems.Add(new DrsItem()
+                    {
+                        Id = id,
+                        Data = buffer,
+                        Size = (uint)buffer.Length,
+                        Start = last.Start + last.Size,
+                    });
+                }
+                else
+                {
+                    //DrsItems.Where(x=>x.Id ==id).First().Start = buffer; //a function will fix the position for DrsItem
+                    DrsItems.Where(x => x.Id ==id).First().Data = buffer;
+                    DrsItems.Where(x => x.Id ==id).First().Size = (uint)buffer.Length;
+                }
+                drs.listDrsTable.Where(x => x.Type == type).First().Items =DrsItems;
             }
-            else
-            {
-                //DrsItems.Where(x=>x.Id ==id).First().Start = buffer; //a function will fix the position for DrsItem
-                DrsItems.Where(x => x.Id ==id).First().Data = buffer;
-                DrsItems.Where(x => x.Id ==id).First().Size = (uint)buffer.Length;
-            }
-            drs.listDrsTable.Where(x => x.Type == type).First().Items =DrsItems;
         }
         private static void writeDrsFile(string path, DrsFile drs)
         {
