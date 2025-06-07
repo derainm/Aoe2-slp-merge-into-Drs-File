@@ -230,6 +230,19 @@ namespace voobly_drs_merger
                             this.form_.Controls.Add((Control)radioButton);
                             ++num4;
                         }
+                        RadioButton radioButton2 = new RadioButton();
+                        radioButton2.Tag ="custom";
+                        radioButton2.Text = "";
+                        radioButton2.AutoSize = true;
+                        radioButton2.Location = new Point(10, num4 * 20);
+                        this.form_.Controls.Add((Control)radioButton2);
+                        TextBox textBox = new TextBox(); 
+                        textBox.Text = "curstom.drs";
+                        textBox.AutoSize = true;
+                        textBox.Location = new Point(10+15, num4 * 20);
+                        this.form_.Controls.Add((Control)textBox);
+                        radioButton2.Text= textBox.Text;
+
                         Button button = new Button();
                         button.Text = "Merge";
                         button.Name = "Merge";
@@ -247,7 +260,7 @@ namespace voobly_drs_merger
                         {
                             string drsffile = Path.Combine(this.datamodsSelected.First(), this.lstDrsSelected.First());
                             string saveDrs = drsffile.Replace(".drs", "_Original.drs");
-                            if (!File.Exists(saveDrs))
+                            if (File.Exists(drsffile)   && !File.Exists(saveDrs)  )
                             {
                                 File.Copy(drsffile, saveDrs);
                             }

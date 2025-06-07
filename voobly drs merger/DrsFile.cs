@@ -7,12 +7,6 @@ using System.Reflection;
 
 namespace voobly_drs_merger
 {
-    //BinaryReader binaryReader = new BinaryReader(input);
-    //string copy_right = System.Text.Encoding.Default.GetString(binaryReader.ReadBytes(0x28));
-    //string version = System.Text.Encoding.Default.GetString(binaryReader.ReadBytes(4));
-    //string file_type = System.Text.Encoding.Default.GetString(binaryReader.ReadBytes(12)); //File type
-    //uint DrsTable_length = binaryReader.ReadUInt32();
-    //int num2 = (int)binaryReader.ReadUInt32();
     public class DrsHeaderFile
     {
         public string copy_right;    //40
@@ -254,25 +248,38 @@ namespace voobly_drs_merger
             }
         }
 
-
-        private static void CreateMissingDrsTable(DrsFile drs)
+        private static bool hasFileType(string modPath, drstype type)
         {
-            if (!drs.listDrsTable.Exists(x => x.Type == (int)drstype.slp))
+            bool res  = false;
+            var fileExtention = getFileExtention((int)type);
+            var lstFile= Directory.GetFiles(modPath).ToList();
+            if(lstFile.Count== 0)
+            {
+                return false;
+            }
+            res = lstFile.Where(x => x.EndsWith(fileExtention)).Count()>0;
+
+
+            return res;
+        }
+        private static void CreateMissingDrsTable(DrsFile drs, string modPath)
+        {
+            if (!drs.listDrsTable.Exists(x => x.Type == (int)drstype.slp) && hasFileType(modPath, drstype.slp))
             {
                 uint posSlp = firstDrsTable(drs.listDrsTable);
                 drs.listDrsTable.Add(new DrsTable() { Start = posSlp, Type = (uint)drstype.slp, Items  = new List<DrsItem>() });
                 drs.headerFile.DrsTable_length +=1;
             }
-            if (!drs.listDrsTable.Exists(x => x.Type == (int)drstype.wav))
+            if (!drs.listDrsTable.Exists(x => x.Type == (int)drstype.wav) && hasFileType(modPath, drstype.wav))
             {
                 drs.listDrsTable.Add(new DrsTable() { Start = 0, Type = (uint)drstype.wav, Items  = new List<DrsItem>() });
                 drs.headerFile.DrsTable_length +=1;
             }
-            if (!drs.listDrsTable.Exists(x => x.Type == (int)drstype.bina))
+            if (!drs.listDrsTable.Exists(x => x.Type == (int)drstype.bina) && hasFileType(modPath, drstype.bina))
             {
                 drs.listDrsTable.Add(new DrsTable() { Start = 0, Type = (uint)drstype.bina, Items  = new List<DrsItem>() });
                 drs.headerFile.DrsTable_length +=1;
-            } 
+            }  
         }
         private static void fixDrsTablePosition(List<DrsTable> drsTableToUpdate)
         {
@@ -281,15 +288,25 @@ namespace voobly_drs_merger
             //drsItem.Size = binaryReader.ReadUInt32();
             // 3 * 4 = 12   -> 4 is the sizeof UInt32 
             //slp
+            //todo fix with existing type
             uint posSlp = firstDrsTable(drsTableToUpdate);
-            drsTableToUpdate.Where(x => x.Type == (int)drstype.slp).First().Start = posSlp;
+            if(drsTableToUpdate.Exists(x => x.Type == (int)drstype.slp))
+            { 
+                drsTableToUpdate.Where(x => x.Type == (int)drstype.slp).First().Start = posSlp;
+            }
             //wav
             var slpDrsItemCount = drsTableToUpdate.Where(x => x.Type == (int)drstype.slp).First().Items.Count();
-            drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Start = (uint)slpDrsItemCount * 12 + posSlp;
+            if(drsTableToUpdate.Exists(x => x.Type == (int)drstype.wav))
+            {
+                drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Start = (uint)slpDrsItemCount * 12 + posSlp;
+            }
             //bina
             var posWav = drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Start;
             var wavDrsItemCount = drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Items.Count();
-            drsTableToUpdate.Where(x => x.Type == (int)drstype.bina).First().Start = (uint)wavDrsItemCount * 12 + posWav;
+            if (drsTableToUpdate.Exists(x => x.Type == (int)drstype.bina))
+            {
+                drsTableToUpdate.Where(x => x.Type == (int)drstype.bina).First().Start = (uint)wavDrsItemCount * 12 + posWav;
+            }
         }
 
         private static string getFileExtention(int type)
@@ -330,7 +347,11 @@ namespace voobly_drs_merger
             var last = DrsItems.LastOrDefault();
             if(last == null)
             {
-                last =drs.listDrsTable.Where(x => x.Items.Count()>0).FirstOrDefault().Items.LastOrDefault();
+                last =drs.listDrsTable.Where(x => x.Items.Count()>0)?.FirstOrDefault()?.Items?.LastOrDefault();
+                if(last == null )
+                {
+                    last = new DrsItem() { Start = drs.listDrsTable.Where(x=>x.Start>0).Last().Start, Size=0  };
+                }
             }
             if (buffer!=null)
             {
@@ -433,9 +454,25 @@ namespace voobly_drs_merger
         }
 
         public static void mergeFileIntoDrs(string folderPath , string  drsPath  )
-        { 
-            DrsFile drs = parseToDrsClass(drsPath); 
-            CreateMissingDrsTable(drs);
+        {
+            DrsFile drs = new DrsFile();
+            if (File.Exists(drsPath))
+            {
+                drs = parseToDrsClass(drsPath);
+            }
+            else
+            {
+                drs.headerFile = new DrsHeaderFile()
+                {
+                    copy_right = "Copyright (c) 1997 Ensemble Studios" ,
+                    version = "1.00",
+                    file_type = "tribe",
+                    DrsTable_length = 0 ,
+                    eof = 0
+                };
+                drs.listDrsTable = new List<DrsTable>();
+            }
+            CreateMissingDrsTable(drs,folderPath);
             foreach (var f in Directory.GetFiles(folderPath)) 
             {
                 UpdateDrsFile(f, drs);
