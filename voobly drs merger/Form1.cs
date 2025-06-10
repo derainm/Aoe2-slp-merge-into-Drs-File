@@ -18,6 +18,8 @@ namespace voobly_drs_merger
         private string VooblyModsPath;
         private string drsPath;
         private string slpPath;
+        private string LanguageDll;
+        private string LanguageIni;
         private List<string> selectedMods = new List<string>();
         public Form formm = new Form();
         private Form form_ = new Form();
@@ -327,6 +329,67 @@ namespace voobly_drs_merger
             DrsUtilities.mergeFileIntoDrs(slpPath,drsPath) ;
             Cursor.Current = Cursors.Default;
             MessageBox.Show("Done.");
+        }
+
+        private void buttonExtractlanguageIni_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonLangDll_Click(object sender, EventArgs e)
+        {
+            FileDialog.Filter = "language dll (*.dll)|*.dll";
+            if (FileDialog.ShowDialog() == DialogResult.OK)
+            {
+                LanguageDll = FileDialog.FileName;
+                if (string.IsNullOrEmpty(LanguageDll))
+                {
+                    MessageBox.Show("File is empty");
+                    textBoxLanguagedll.Text = string.Empty;
+                    return;
+                }
+                textBoxLanguagedll.Text = LanguageDll;
+            }
+        }
+
+        private void buttonLangIni_Click(object sender, EventArgs e)
+        {
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+
+            // Create a new instance of SaveFileDialog
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                // Set properties for the dialog
+                saveFileDialog.Filter = "Text Files (*.ini)|*.ini";
+                saveFileDialog.Title = "Save your file";
+                if(string.IsNullOrEmpty(LanguageDll))
+                    saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                else
+                    saveFileDialog.InitialDirectory = Path.GetDirectoryName(LanguageDll);// Environment.SpecialFolder.MyDocuments);
+                saveFileDialog.DefaultExt = "ini"; // Default extension if user doesn't specify one
+                saveFileDialog.AddExtension = true; // Add the default extension if user omits it
+
+                // Show the dialog and check if the user clicked OK
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Get the selected file path
+                    LanguageIni = saveFileDialog.FileName;
+
+                    try
+                    {
+                        DllResourceExtractor.ExtractAllResources(LanguageDll, LanguageIni);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error saving file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Save operation cancelled by the user.", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
         }
     }
 }

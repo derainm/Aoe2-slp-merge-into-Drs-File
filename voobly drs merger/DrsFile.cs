@@ -289,8 +289,7 @@ namespace voobly_drs_merger
             //drsItem.Start = binaryReader.ReadUInt32();
             //drsItem.Size = binaryReader.ReadUInt32();
             // 3 * 4 = 12   -> 4 is the sizeof UInt32 
-            //slp
-            //todo fix with existing type
+            //slp 
             uint posSlp = firstDrsTable(drsTableToUpdate);
             if(drsTableToUpdate.Exists(x => x.Type == (int)drstype.slp) && hasFileType(modPath, drstype.slp))
             { 
