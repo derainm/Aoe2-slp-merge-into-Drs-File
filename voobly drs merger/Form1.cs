@@ -238,11 +238,12 @@ namespace voobly_drs_merger
                         this.form_.Controls.Add((Control)radioButton2);
                         TextBox textBox = new TextBox(); 
                         textBox.Text = "curstom.drs";
+                        //stextBox.Tag = "curstom.drs";
                         textBox.AutoSize = true;
                         textBox.Location = new Point(10+15, num4 * 20);
                         this.form_.Controls.Add((Control)textBox);
-                        radioButton2.Text= textBox.Text;
-
+                        //radioButton2.Text= textBox.Text;
+                       
                         Button button = new Button();
                         button.Text = "Merge";
                         button.Name = "Merge";
@@ -258,21 +259,26 @@ namespace voobly_drs_merger
                         this.form_.AutoScroll = true;
                         if (this.form_.ShowDialog() == DialogResult.OK)
                         {
-                            string drsffile = Path.Combine(this.datamodsSelected.First(), this.lstDrsSelected.First());
-                            string saveDrs = drsffile.Replace(".drs", "_Original.drs");
-                            if (File.Exists(drsffile)   && !File.Exists(saveDrs)  )
+                            lstDrsSelected.Add(textBox.Text);
+                            lstDrsSelected= lstDrsSelected.Where(x=>!string.IsNullOrEmpty(x)).ToList();
+                            if (lstDrsSelected.Count() > 0)
                             {
-                                File.Copy(drsffile, saveDrs);
+                                string drsffile = Path.Combine(this.datamodsSelected.First(), this.lstDrsSelected.First());
+                                string saveDrs = drsffile.Replace(".drs", "_Original.drs");
+                                if (File.Exists(drsffile)   && !File.Exists(saveDrs))
+                                {
+                                    File.Copy(drsffile, saveDrs);
+                                }
+                                Cursor.Current = Cursors.WaitCursor;
+                                foreach (var d in selectedMods)
+                                {
+                                    string dir = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Local Mods", d, "drs");
+                                    DrsUtilities.mergeFileIntoDrs(dir, drsffile);
+                                }
+                                Cursor.Current = Cursors.Default;
+                                MessageBox.Show("Done.");
+                                this.lstDrsSelected.Clear();
                             }
-                            Cursor.Current = Cursors.WaitCursor;
-                            foreach(var d in selectedMods)
-                            {
-                                string dir = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Local Mods", d, "drs");
-                                DrsUtilities.mergeFileIntoDrs(dir, drsffile);
-                            }
-                            Cursor.Current = Cursors.Default;
-                            MessageBox.Show("Done.");
-                            this.lstDrsSelected.Clear();
                         }
                         this.form_.Dispose();
                     }
