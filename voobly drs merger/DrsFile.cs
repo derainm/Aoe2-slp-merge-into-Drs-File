@@ -281,7 +281,9 @@ namespace voobly_drs_merger
                 drs.headerFile.DrsTable_length +=1;
             }  
         }
-        private static void fixDrsTablePosition(List<DrsTable> drsTableToUpdate)
+ 
+
+            private static void fixDrsTablePosition(List<DrsTable> drsTableToUpdate,string modPath)
         {
             //drsItem.Id = binaryReader.ReadUInt32();
             //drsItem.Start = binaryReader.ReadUInt32();
@@ -290,21 +292,21 @@ namespace voobly_drs_merger
             //slp
             //todo fix with existing type
             uint posSlp = firstDrsTable(drsTableToUpdate);
-            if(drsTableToUpdate.Exists(x => x.Type == (int)drstype.slp))
+            if(drsTableToUpdate.Exists(x => x.Type == (int)drstype.slp) && hasFileType(modPath, drstype.slp))
             { 
                 drsTableToUpdate.Where(x => x.Type == (int)drstype.slp).First().Start = posSlp;
             }
             //wav
-            var slpDrsItemCount = drsTableToUpdate.Where(x => x.Type == (int)drstype.slp).First().Items.Count();
-            if(drsTableToUpdate.Exists(x => x.Type == (int)drstype.wav))
+            if(drsTableToUpdate.Exists(x => x.Type == (int)drstype.wav) && hasFileType(modPath, drstype.wav))
             {
+                var slpDrsItemCount = drsTableToUpdate.Where(x => x.Type == (int)drstype.slp).First().Items.Count();    
                 drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Start = (uint)slpDrsItemCount * 12 + posSlp;
             }
             //bina
-            var posWav = drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Start;
-            var wavDrsItemCount = drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Items.Count();
-            if (drsTableToUpdate.Exists(x => x.Type == (int)drstype.bina))
+            if (drsTableToUpdate.Exists(x => x.Type == (int)drstype.bina) &&  hasFileType(modPath, drstype.bina))
             {
+                var posWav = drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Start;
+                var wavDrsItemCount = drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Items.Count();
                 drsTableToUpdate.Where(x => x.Type == (int)drstype.bina).First().Start = (uint)wavDrsItemCount * 12 + posWav;
             }
         }
@@ -436,10 +438,10 @@ namespace voobly_drs_merger
                 }
             }
         }
-        public static void fixDrsItemPosition(DrsFile drs)
+        public static void fixDrsItemPosition(DrsFile drs,string folderPath)
         {
             //fix drs table position
-            fixDrsTablePosition(drs.listDrsTable);
+            fixDrsTablePosition(drs.listDrsTable, folderPath);
             //fix drs items positions
             uint pos = getEofDrs(drs.listDrsTable);
             drs.headerFile.eof =(int)pos;
@@ -464,7 +466,7 @@ namespace voobly_drs_merger
             {
                 drs.headerFile = new DrsHeaderFile()
                 {
-                    copy_right = "Copyright (c) 1997 Ensemble Studios" ,
+                    copy_right = "Copyright (c) 1997 Ensemble Studios.\u001a",
                     version = "1.00",
                     file_type = "tribe",
                     DrsTable_length = 0 ,
@@ -477,7 +479,7 @@ namespace voobly_drs_merger
             {
                 UpdateDrsFile(f, drs);
             }
-            fixDrsItemPosition(drs);//we add new slp,wav , bina so we need update position
+            fixDrsItemPosition(drs, folderPath);//we add new slp,wav , bina so we need update position
             writeDrsFile(drsPath, drs);
         } 
     }
