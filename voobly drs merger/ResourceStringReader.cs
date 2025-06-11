@@ -179,10 +179,10 @@ namespace voobly_drs_merger
 
                 List<string> lst = new List<string>();
                 foreach(var r in extractedStrings)
-                { 
+                {  
                     lst.Add($"{r.Id}={r.Value.Replace("\n", "\\n")}");
                 }
-                File.WriteAllLines(outFile, lst.ToArray());
+                File.WriteAllLines(outFile, lst.ToArray(), Encoding.UTF8);
                 return true;
             }
             finally
@@ -273,6 +273,7 @@ namespace voobly_drs_merger
 
                 // Read the length of the string (WORD)
                 short length = Marshal.ReadInt16(currentPtr);
+                length++;
                 currentPtr = (IntPtr)((long)currentPtr + 2); // Move past the length
 
                 if (length > 0)
@@ -280,7 +281,7 @@ namespace voobly_drs_merger
                     // Read the string itself (Unicode)
                     byte[] buffer = new byte[length * 2];
                     Marshal.Copy(currentPtr, buffer, 0, buffer.Length);
-                    string value = Encoding.Unicode.GetString(buffer);
+                    string value = Encoding.Unicode.GetString(buffer); 
 
                     uint stringId = (uint)((resourceBlockId - 1) * 16 + i); // Calculate the actual string ID
 

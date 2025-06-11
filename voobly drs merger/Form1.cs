@@ -473,12 +473,14 @@ namespace voobly_drs_merger
             StringBuilder sb = new StringBuilder(); 
             string pathRc = LanguageIni.Replace(".ini", ".rc");
             string pathRes = LanguageIni.Replace(".ini", ".res");
+
+             
             if (string.IsNullOrEmpty(LanguageIni))
             {
                 MessageBox.Show("Browser language ini file .");
                 return;
             } 
-            List<string> lst = File.ReadAllLines(LanguageIni).ToList();
+            List<string> lst = File.ReadAllLines(LanguageIni, Encoding.UTF8).ToList();
             if(lst.Count() == 0)
             {
                 MessageBox.Show("empty file ."); 
@@ -493,11 +495,16 @@ namespace voobly_drs_merger
                 string stringvalue = l.Split('=').LastOrDefault();
                 if (ushort.TryParse(l.Split('=').First(), out id))
                 {
+                    //if (id ==19705)
+                    //{
+                    //    stringvalue = stringvalue.Replace(@"\\", "\\\\");
+                    //}
+                    //stringvalue = stringvalue.Replace(@"\\", "\\\\");
                     sb.AppendLine($"{id},\"{stringvalue}\"");
                 }
             }
             sb.AppendLine("}");
-            File.WriteAllText(pathRc, sb.ToString());
+            File.WriteAllText(pathRc, sb.ToString(), Encoding.UTF8);
             sb.Clear(); 
             if(!File.Exists("rh.exe"))
             {
@@ -505,11 +512,11 @@ namespace voobly_drs_merger
                 File.WriteAllBytes("rh.exe", rh);
             }
             //rh.exe is https://www.angusj.com/resourcehacker/
-            string cmd = $" -open {pathRc} -save {pathRes} -action compile -log ";
+            string cmd = $" -open \"{pathRc}\" -save \"{pathRes}\" -action compile -log ";
             try
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.FileName = "rh.exe";
+                startInfo.FileName = @"rh.exe";
                 startInfo.Arguments = cmd;
                 startInfo.UseShellExecute = false;
 
@@ -524,6 +531,8 @@ namespace voobly_drs_merger
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
+
+
 
         }
     }
