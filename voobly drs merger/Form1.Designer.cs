@@ -34,27 +34,35 @@
             this.buttonBrowserDrs = new System.Windows.Forms.Button();
             this.buttonMergeSlpIntoDrs = new System.Windows.Forms.Button();
             this.buttonBrowserSlpDir = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.VooblyMods = new System.Windows.Forms.TabPage();
             this.SlpIntoDrs = new System.Windows.Forms.TabPage();
-            this.langdll = new System.Windows.Forms.TabPage();
-            this.FolderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.FileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.button5 = new System.Windows.Forms.Button();
-            this.mergeVooblyMod = new System.Windows.Forms.Button();
-            this.browserAoe2 = new System.Windows.Forms.Button();
+            this.tabPagelangdllIni = new System.Windows.Forms.TabPage();
             this.buttonLangDll = new System.Windows.Forms.Button();
             this.buttonLangIni = new System.Windows.Forms.Button();
             this.textBoxLanguagedll = new System.Windows.Forms.TextBox();
-            this.tabControl1.SuspendLayout();
+            this.tabPageLanginidll = new System.Windows.Forms.TabPage();
+            this.buttonSaveLanguageDll = new System.Windows.Forms.Button();
+            this.buttonBrowserLangIni = new System.Windows.Forms.Button();
+            this.textBoxLangIni = new System.Windows.Forms.TextBox();
+            this.FolderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.FileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.buttonRestoreMod = new System.Windows.Forms.Button();
+            this.mergeVooblyMod = new System.Windows.Forms.Button();
+            this.browserAoe2 = new System.Windows.Forms.Button();
+            this.textBoxLangdll = new System.Windows.Forms.TextBox();
+            this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabControl.SuspendLayout();
             this.SlpIntoDrs.SuspendLayout();
-            this.langdll.SuspendLayout();
+            this.tabPagelangdllIni.SuspendLayout();
+            this.tabPageLanginidll.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxSlpDir
             // 
             this.textBoxSlpDir.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.textBoxSlpDir.Location = new System.Drawing.Point(262, 177);
+            this.textBoxSlpDir.Location = new System.Drawing.Point(206, 198);
             this.textBoxSlpDir.Name = "textBoxSlpDir";
             this.textBoxSlpDir.ReadOnly = true;
             this.textBoxSlpDir.Size = new System.Drawing.Size(613, 20);
@@ -63,7 +71,7 @@
             // textBoxdrsBrowser
             // 
             this.textBoxdrsBrowser.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.textBoxdrsBrowser.Location = new System.Drawing.Point(262, 117);
+            this.textBoxdrsBrowser.Location = new System.Drawing.Point(206, 138);
             this.textBoxdrsBrowser.Name = "textBoxdrsBrowser";
             this.textBoxdrsBrowser.ReadOnly = true;
             this.textBoxdrsBrowser.Size = new System.Drawing.Size(613, 20);
@@ -75,7 +83,7 @@
             this.buttonBrowserDrs.Cursor = System.Windows.Forms.Cursors.Default;
             this.buttonBrowserDrs.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonBrowserDrs.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonBrowserDrs.Location = new System.Drawing.Point(84, 98);
+            this.buttonBrowserDrs.Location = new System.Drawing.Point(28, 119);
             this.buttonBrowserDrs.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonBrowserDrs.Name = "buttonBrowserDrs";
             this.buttonBrowserDrs.Size = new System.Drawing.Size(138, 49);
@@ -89,7 +97,7 @@
             this.buttonMergeSlpIntoDrs.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.buttonMergeSlpIntoDrs.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonMergeSlpIntoDrs.ForeColor = System.Drawing.Color.Cornsilk;
-            this.buttonMergeSlpIntoDrs.Location = new System.Drawing.Point(84, 216);
+            this.buttonMergeSlpIntoDrs.Location = new System.Drawing.Point(28, 237);
             this.buttonMergeSlpIntoDrs.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonMergeSlpIntoDrs.Name = "buttonMergeSlpIntoDrs";
             this.buttonMergeSlpIntoDrs.Size = new System.Drawing.Size(138, 49);
@@ -102,8 +110,8 @@
             // 
             this.buttonBrowserSlpDir.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.buttonBrowserSlpDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonBrowserSlpDir.ForeColor = System.Drawing.Color.Cornsilk;
-            this.buttonBrowserSlpDir.Location = new System.Drawing.Point(84, 153);
+            this.buttonBrowserSlpDir.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonBrowserSlpDir.Location = new System.Drawing.Point(28, 174);
             this.buttonBrowserSlpDir.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonBrowserSlpDir.Name = "buttonBrowserSlpDir";
             this.buttonBrowserSlpDir.Size = new System.Drawing.Size(138, 49);
@@ -112,19 +120,21 @@
             this.buttonBrowserSlpDir.UseVisualStyleBackColor = false;
             this.buttonBrowserSlpDir.Click += new System.EventHandler(this.buttonBrowserSlpDir_Click);
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.VooblyMods);
-            this.tabControl1.Controls.Add(this.SlpIntoDrs);
-            this.tabControl1.Controls.Add(this.langdll);
-            this.tabControl1.Location = new System.Drawing.Point(28, 23);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(938, 495);
-            this.tabControl1.TabIndex = 19;
+            this.tabControl.Controls.Add(this.VooblyMods);
+            this.tabControl.Controls.Add(this.SlpIntoDrs);
+            this.tabControl.Controls.Add(this.tabPagelangdllIni);
+            this.tabControl.Controls.Add(this.tabPageLanginidll);
+            this.tabControl.Location = new System.Drawing.Point(28, 23);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(938, 495);
+            this.tabControl.TabIndex = 19;
+            this.tabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             // 
             // VooblyMods
             // 
@@ -152,18 +162,110 @@
             this.SlpIntoDrs.TabIndex = 1;
             this.SlpIntoDrs.Text = "Slp Into Drs";
             // 
-            // langdll
+            // tabPagelangdllIni
             // 
-            this.langdll.BackColor = System.Drawing.Color.SteelBlue;
-            this.langdll.Controls.Add(this.buttonLangDll);
-            this.langdll.Controls.Add(this.buttonLangIni);
-            this.langdll.Controls.Add(this.textBoxLanguagedll);
-            this.langdll.Location = new System.Drawing.Point(4, 22);
-            this.langdll.Name = "langdll";
-            this.langdll.Padding = new System.Windows.Forms.Padding(3);
-            this.langdll.Size = new System.Drawing.Size(930, 469);
-            this.langdll.TabIndex = 2;
-            this.langdll.Text = "language dll -> language ini";
+            this.tabPagelangdllIni.BackColor = System.Drawing.Color.SteelBlue;
+            this.tabPagelangdllIni.Controls.Add(this.buttonLangDll);
+            this.tabPagelangdllIni.Controls.Add(this.buttonLangIni);
+            this.tabPagelangdllIni.Controls.Add(this.textBoxLanguagedll);
+            this.tabPagelangdllIni.Location = new System.Drawing.Point(4, 22);
+            this.tabPagelangdllIni.Name = "tabPagelangdllIni";
+            this.tabPagelangdllIni.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagelangdllIni.Size = new System.Drawing.Size(930, 469);
+            this.tabPagelangdllIni.TabIndex = 2;
+            this.tabPagelangdllIni.Text = "language dll -> language ini";
+            // 
+            // buttonLangDll
+            // 
+            this.buttonLangDll.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.buttonLangDll.Cursor = System.Windows.Forms.Cursors.Default;
+            this.buttonLangDll.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonLangDll.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonLangDll.Location = new System.Drawing.Point(28, 119);
+            this.buttonLangDll.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.buttonLangDll.Name = "buttonLangDll";
+            this.buttonLangDll.Size = new System.Drawing.Size(138, 49);
+            this.buttonLangDll.TabIndex = 16;
+            this.buttonLangDll.Text = "Browser language dll";
+            this.buttonLangDll.UseVisualStyleBackColor = false;
+            this.buttonLangDll.Click += new System.EventHandler(this.buttonLangDll_Click);
+            // 
+            // buttonLangIni
+            // 
+            this.buttonLangIni.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.buttonLangIni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonLangIni.ForeColor = System.Drawing.Color.Cornsilk;
+            this.buttonLangIni.Location = new System.Drawing.Point(28, 174);
+            this.buttonLangIni.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.buttonLangIni.Name = "buttonLangIni";
+            this.buttonLangIni.Size = new System.Drawing.Size(138, 49);
+            this.buttonLangIni.TabIndex = 15;
+            this.buttonLangIni.Text = "save as language ini";
+            this.buttonLangIni.UseVisualStyleBackColor = false;
+            this.buttonLangIni.Click += new System.EventHandler(this.buttonLangIni_Click);
+            // 
+            // textBoxLanguagedll
+            // 
+            this.textBoxLanguagedll.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textBoxLanguagedll.Location = new System.Drawing.Point(206, 138);
+            this.textBoxLanguagedll.Name = "textBoxLanguagedll";
+            this.textBoxLanguagedll.ReadOnly = true;
+            this.textBoxLanguagedll.Size = new System.Drawing.Size(613, 20);
+            this.textBoxLanguagedll.TabIndex = 18;
+            // 
+            // tabPageLanginidll
+            // 
+            this.tabPageLanginidll.BackColor = System.Drawing.Color.SteelBlue;
+            this.tabPageLanginidll.Controls.Add(this.label1);
+            this.tabPageLanginidll.Controls.Add(this.comboBoxLanguage);
+            this.tabPageLanginidll.Controls.Add(this.textBoxLangdll);
+            this.tabPageLanginidll.Controls.Add(this.buttonSaveLanguageDll);
+            this.tabPageLanginidll.Controls.Add(this.buttonBrowserLangIni);
+            this.tabPageLanginidll.Controls.Add(this.textBoxLangIni);
+            this.tabPageLanginidll.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLanginidll.Name = "tabPageLanginidll";
+            this.tabPageLanginidll.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLanginidll.Size = new System.Drawing.Size(930, 469);
+            this.tabPageLanginidll.TabIndex = 3;
+            this.tabPageLanginidll.Text = "language ini -> language dll ";
+            // 
+            // buttonSaveLanguageDll
+            // 
+            this.buttonSaveLanguageDll.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.buttonSaveLanguageDll.Cursor = System.Windows.Forms.Cursors.Default;
+            this.buttonSaveLanguageDll.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSaveLanguageDll.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonSaveLanguageDll.Location = new System.Drawing.Point(28, 174);
+            this.buttonSaveLanguageDll.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.buttonSaveLanguageDll.Name = "buttonSaveLanguageDll";
+            this.buttonSaveLanguageDll.Size = new System.Drawing.Size(138, 49);
+            this.buttonSaveLanguageDll.TabIndex = 20;
+            this.buttonSaveLanguageDll.Text = "Save language dll";
+            this.buttonSaveLanguageDll.UseVisualStyleBackColor = false;
+            this.buttonSaveLanguageDll.Click += new System.EventHandler(this.buttonSaveLanguageDll_Click);
+            // 
+            // buttonBrowserLangIni
+            // 
+            this.buttonBrowserLangIni.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.buttonBrowserLangIni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBrowserLangIni.ForeColor = System.Drawing.Color.Cornsilk;
+            this.buttonBrowserLangIni.Location = new System.Drawing.Point(28, 119);
+            this.buttonBrowserLangIni.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.buttonBrowserLangIni.Name = "buttonBrowserLangIni";
+            this.buttonBrowserLangIni.Size = new System.Drawing.Size(138, 49);
+            this.buttonBrowserLangIni.TabIndex = 19;
+            this.buttonBrowserLangIni.Text = "Browser language ini";
+            this.buttonBrowserLangIni.UseVisualStyleBackColor = false;
+            this.buttonBrowserLangIni.Click += new System.EventHandler(this.buttonBrowserLangIni_Click);
+            // 
+            // textBoxLangIni
+            // 
+            this.textBoxLangIni.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textBoxLangIni.Location = new System.Drawing.Point(206, 138);
+            this.textBoxLangIni.Name = "textBoxLangIni";
+            this.textBoxLangIni.ReadOnly = true;
+            this.textBoxLangIni.Size = new System.Drawing.Size(613, 20);
+            this.textBoxLangIni.TabIndex = 21;
             // 
             // FolderDialog
             // 
@@ -173,21 +275,21 @@
             // 
             this.FileDialog.FileName = "FileDialog";
             // 
-            // button5
+            // buttonRestoreMod
             // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.button5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button5.Location = new System.Drawing.Point(170, 536);
-            this.button5.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(155, 49);
-            this.button5.TabIndex = 22;
-            this.button5.Text = "Restore your game as before";
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.buttonRestoreMod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRestoreMod.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.buttonRestoreMod.Cursor = System.Windows.Forms.Cursors.Default;
+            this.buttonRestoreMod.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRestoreMod.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonRestoreMod.Location = new System.Drawing.Point(170, 536);
+            this.buttonRestoreMod.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.buttonRestoreMod.Name = "buttonRestoreMod";
+            this.buttonRestoreMod.Size = new System.Drawing.Size(155, 49);
+            this.buttonRestoreMod.TabIndex = 22;
+            this.buttonRestoreMod.Text = "Restore your game as before";
+            this.buttonRestoreMod.UseVisualStyleBackColor = false;
+            this.buttonRestoreMod.Click += new System.EventHandler(this.buttonRestoreMod_Click);
             // 
             // mergeVooblyMod
             // 
@@ -221,43 +323,33 @@
             this.browserAoe2.UseVisualStyleBackColor = false;
             this.browserAoe2.Click += new System.EventHandler(this.browserAoe2_Click);
             // 
-            // buttonLangDll
+            // textBoxLangdll
             // 
-            this.buttonLangDll.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.buttonLangDll.Cursor = System.Windows.Forms.Cursors.Default;
-            this.buttonLangDll.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonLangDll.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonLangDll.Location = new System.Drawing.Point(38, 74);
-            this.buttonLangDll.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.buttonLangDll.Name = "buttonLangDll";
-            this.buttonLangDll.Size = new System.Drawing.Size(138, 49);
-            this.buttonLangDll.TabIndex = 16;
-            this.buttonLangDll.Text = "Browser language dll";
-            this.buttonLangDll.UseVisualStyleBackColor = false;
-            this.buttonLangDll.Click += new System.EventHandler(this.buttonLangDll_Click);
+            this.textBoxLangdll.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textBoxLangdll.Location = new System.Drawing.Point(206, 198);
+            this.textBoxLangdll.Name = "textBoxLangdll";
+            this.textBoxLangdll.ReadOnly = true;
+            this.textBoxLangdll.Size = new System.Drawing.Size(613, 20);
+            this.textBoxLangdll.TabIndex = 22;
             // 
-            // buttonLangIni
+            // comboBoxLanguage
             // 
-            this.buttonLangIni.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.buttonLangIni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonLangIni.ForeColor = System.Drawing.Color.Cornsilk;
-            this.buttonLangIni.Location = new System.Drawing.Point(38, 129);
-            this.buttonLangIni.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.buttonLangIni.Name = "buttonLangIni";
-            this.buttonLangIni.Size = new System.Drawing.Size(138, 49);
-            this.buttonLangIni.TabIndex = 15;
-            this.buttonLangIni.Text = "save as language ini";
-            this.buttonLangIni.UseVisualStyleBackColor = false;
-            this.buttonLangIni.Click += new System.EventHandler(this.buttonLangIni_Click);
+            this.comboBoxLanguage.FormattingEnabled = true;
+            this.comboBoxLanguage.Location = new System.Drawing.Point(206, 69);
+            this.comboBoxLanguage.Name = "comboBoxLanguage";
+            this.comboBoxLanguage.Size = new System.Drawing.Size(203, 21);
+            this.comboBoxLanguage.TabIndex = 23;
             // 
-            // textBoxLanguagedll
+            // label1
             // 
-            this.textBoxLanguagedll.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.textBoxLanguagedll.Location = new System.Drawing.Point(216, 93);
-            this.textBoxLanguagedll.Name = "textBoxLanguagedll";
-            this.textBoxLanguagedll.ReadOnly = true;
-            this.textBoxLanguagedll.Size = new System.Drawing.Size(613, 20);
-            this.textBoxLanguagedll.TabIndex = 18;
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(85, 70);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(81, 20);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "Language";
             // 
             // Form1
             // 
@@ -265,18 +357,20 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.ClientSize = new System.Drawing.Size(1003, 594);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.buttonRestoreMod);
             this.Controls.Add(this.mergeVooblyMod);
             this.Controls.Add(this.browserAoe2);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Slp Drs merger";
-            this.tabControl1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.SlpIntoDrs.ResumeLayout(false);
             this.SlpIntoDrs.PerformLayout();
-            this.langdll.ResumeLayout(false);
-            this.langdll.PerformLayout();
+            this.tabPagelangdllIni.ResumeLayout(false);
+            this.tabPagelangdllIni.PerformLayout();
+            this.tabPageLanginidll.ResumeLayout(false);
+            this.tabPageLanginidll.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -288,18 +382,25 @@
         private System.Windows.Forms.Button buttonBrowserDrs;
         private System.Windows.Forms.Button buttonMergeSlpIntoDrs;
         private System.Windows.Forms.Button buttonBrowserSlpDir;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage VooblyMods;
         private System.Windows.Forms.TabPage SlpIntoDrs;
         private System.Windows.Forms.FolderBrowserDialog FolderDialog;
         private System.Windows.Forms.OpenFileDialog FileDialog;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button buttonRestoreMod;
         private System.Windows.Forms.Button mergeVooblyMod;
         private System.Windows.Forms.Button browserAoe2;
-        private System.Windows.Forms.TabPage langdll;
+        private System.Windows.Forms.TabPage tabPagelangdllIni;
         private System.Windows.Forms.Button buttonLangDll;
         private System.Windows.Forms.Button buttonLangIni;
         private System.Windows.Forms.TextBox textBoxLanguagedll;
+        private System.Windows.Forms.TabPage tabPageLanginidll;
+        private System.Windows.Forms.Button buttonSaveLanguageDll;
+        private System.Windows.Forms.Button buttonBrowserLangIni;
+        private System.Windows.Forms.TextBox textBoxLangIni;
+        private System.Windows.Forms.TextBox textBoxLangdll;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBoxLanguage;
     }
 }
 

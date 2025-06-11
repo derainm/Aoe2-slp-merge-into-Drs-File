@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Windows.Forms;
- 
+using System.Windows.Forms; 
 
 namespace voobly_drs_merger
 {
@@ -25,9 +26,64 @@ namespace voobly_drs_merger
         private Form form_ = new Form();
         private List<string> datamodsSelected = new List<string>();
         private List<string> lstDrsSelected = new List<string>();
+        private List<LanguageInfo> lstLanguageInfo = new List<LanguageInfo>();
         public Form1()
-        {
+        { 
             InitializeComponent(); 
+
+            lstLanguageInfo.Add(new LanguageInfo("LANG_NEUTRAL", 0x00));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_ALBANIAN", 0x1c));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_ARABIC", 0x01));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_ARMENIAN", 0x2b));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_AZERI", 0x2c));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_BASQUE", 0x2d));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_BELARUSIAN", 0x23));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_BOSNIAN", 0x1a));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_BULGARIAN", 0x02));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_CATALAN", 0x03));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_CHINESE", 0x04));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_CROATIAN", 0x1a));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_CZECH", 0x05));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_DANISH", 0x06));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_DUTCH", 0x13));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_ENGLISH", 0x09));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_ESTONIAN", 0x25));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_FARSI", 0x29));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_FINNISH", 0x0b));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_FRENCH", 0x0c));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_GALICIAN", 0x56));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_GEORGIAN", 0x37));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_GERMAN", 0x07));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_GREEK", 0x08));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_HEBREW", 0x0d));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_HINDI", 0x39));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_HUNGARIAN", 0x0e));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_ICELANDIC", 0x0f));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_INDONESIAN", 0x21));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_ITALIAN", 0x10));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_JAPANESE", 0x11));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_KOREAN", 0x12));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_LATVIAN", 0x26));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_LITHUANIAN", 0x27));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_MACEDONIAN", 0x2f));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_MALAY", 0x3e));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_NORWEGIAN", 0x14));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_POLISH", 0x15));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_PORTUGUESE", 0x16));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_ROMANIAN", 0x18));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_RUSSIAN", 0x19));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_SERBIAN", 0x1a));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_SLOVAK", 0x1b));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_SLOVENIAN", 0x24));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_SPANISH", 0x0a));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_SWEDISH", 0x1d));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_THAI", 0x1e));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_TURKISH", 0x1f));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_UKRAINIAN", 0x22));
+            lstLanguageInfo.Add(new LanguageInfo("LANG_VIETNAMESE", 0x2a)); 
+            comboBoxLanguage.DisplayMember = "Language";
+            comboBoxLanguage.ValueMember = "HexValue";  
+            comboBoxLanguage.DataSource = lstLanguageInfo;
         }
 
         private void buttonBrowserSlpDir_Click(object sender, EventArgs e)
@@ -62,7 +118,7 @@ namespace voobly_drs_merger
         }
         private void removeTextBowModWhenRebrowserGame()
         {
-            this.tabControl1.Controls["VooblyMods"].Controls.Clear();
+            this.tabControl.Controls["VooblyMods"].Controls.Clear();
         }
         private void browserAoe2_Click(object sender, EventArgs e)
         {
@@ -97,7 +153,7 @@ namespace voobly_drs_merger
                         checkBox.Text = p.Split('\\').Last();
                         checkBox.AutoSize = true;
                         checkBox.Location = new Point(10, i * 20);
-                        this.tabControl1.Controls["VooblyMods"].Controls.Add((Control)checkBox);
+                        this.tabControl.Controls["VooblyMods"].Controls.Add((Control)checkBox);
                         i++;
                     }
                 }
@@ -112,7 +168,7 @@ namespace voobly_drs_merger
             }
             else
             {
-                foreach (CheckBox control in this.tabControl1.Controls["VooblyMods"].Controls)
+                foreach (CheckBox control in this.tabControl.Controls["VooblyMods"].Controls)
                 {
                     if (control.GetType() == typeof(CheckBox) && control.Checked)
                         selectedMods.Add(control.Text);
@@ -307,11 +363,7 @@ namespace voobly_drs_merger
             else
                 this.form_.DialogResult = DialogResult.OK;
         }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-        }
+ 
 
         private void buttonMergeSlpIntoDrs_Click(object sender, EventArgs e)
         {
@@ -330,12 +382,7 @@ namespace voobly_drs_merger
             Cursor.Current = Cursors.Default;
             MessageBox.Show("Done.");
         }
-
-        private void buttonExtractlanguageIni_Click(object sender, EventArgs e)
-        {
-
-        }
-
+ 
         private void buttonLangDll_Click(object sender, EventArgs e)
         {
             FileDialog.Filter = "language dll (*.dll)|*.dll";
@@ -390,6 +437,94 @@ namespace voobly_drs_merger
                     MessageBox.Show("Save operation cancelled by the user.", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+        }
+
+        private void tabControl_Selected(object sender, TabControlEventArgs e)
+        { 
+
+            buttonRestoreMod.Visible = e.TabPageIndex == 0;
+            mergeVooblyMod.Visible = e.TabPageIndex == 0;
+            browserAoe2.Visible = e.TabPageIndex == 0;  
+        }
+
+        private void buttonRestoreMod_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonBrowserLangIni_Click(object sender, EventArgs e)
+        {
+            FileDialog.Filter = "Language ini (*.ini)|*.ini";
+            if (FileDialog.ShowDialog() == DialogResult.OK)
+            {
+                LanguageIni = FileDialog.FileName;
+                if (string.IsNullOrEmpty(LanguageIni))
+                {
+                    MessageBox.Show("File is empty");
+                    textBoxLangIni.Text = string.Empty;
+                    return;
+                }
+                textBoxLangIni.Text = LanguageIni;
+            } 
+        }
+
+        private void buttonSaveLanguageDll_Click(object sender, EventArgs e)
+        {  
+            StringBuilder sb = new StringBuilder(); 
+            string pathRc = LanguageIni.Replace(".ini", ".rc");
+            string pathRes = LanguageIni.Replace(".ini", ".res");
+            if (string.IsNullOrEmpty(LanguageIni))
+            {
+                MessageBox.Show("Browser language ini file .");
+                return;
+            } 
+            List<string> lst = File.ReadAllLines(LanguageIni).ToList();
+            if(lst.Count() == 0)
+            {
+                MessageBox.Show("empty file ."); 
+                return;
+            }
+            sb.AppendLine("STRINGTABLE");
+            sb.AppendLine($"LANGUAGE {comboBoxLanguage.SelectedItem}, 1 ");
+            sb.AppendLine("{");
+            foreach (var l in lst)
+            {
+                ushort id = 0; 
+                string stringvalue = l.Split('=').LastOrDefault();
+                if (ushort.TryParse(l.Split('=').First(), out id))
+                {
+                    sb.AppendLine($"{id},\"{stringvalue}\"");
+                }
+            }
+            sb.AppendLine("}");
+            File.WriteAllText(pathRc, sb.ToString());
+            sb.Clear(); 
+            if(!File.Exists("rh.exe"))
+            {
+                var rh = Resource1.RH;
+                File.WriteAllBytes("rh.exe", rh);
+            }
+            //rh.exe is https://www.angusj.com/resourcehacker/
+            string cmd = $" -open {pathRc} -save {pathRes} -action compile -log ";
+            try
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = "rh.exe";
+                startInfo.Arguments = cmd;
+                startInfo.UseShellExecute = false;
+
+                using (Process process = Process.Start(startInfo))
+                {
+                    Console.WriteLine($"Executing: rh.exe with arguments: \"{cmd}\"");
+                    process.WaitForExit();
+                    Console.WriteLine($"Process exited with code: {process.ExitCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+
         }
     }
 }
