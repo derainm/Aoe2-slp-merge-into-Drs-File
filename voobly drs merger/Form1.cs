@@ -8,7 +8,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms; 
 
 namespace voobly_drs_merger
@@ -30,60 +32,6 @@ namespace voobly_drs_merger
         public Form1()
         { 
             InitializeComponent(); 
-
-            lstLanguageInfo.Add(new LanguageInfo("LANG_NEUTRAL", 0x00));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_ALBANIAN", 0x1c));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_ARABIC", 0x01));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_ARMENIAN", 0x2b));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_AZERI", 0x2c));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_BASQUE", 0x2d));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_BELARUSIAN", 0x23));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_BOSNIAN", 0x1a));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_BULGARIAN", 0x02));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_CATALAN", 0x03));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_CHINESE", 0x04));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_CROATIAN", 0x1a));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_CZECH", 0x05));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_DANISH", 0x06));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_DUTCH", 0x13));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_ENGLISH", 0x09));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_ESTONIAN", 0x25));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_FARSI", 0x29));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_FINNISH", 0x0b));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_FRENCH", 0x0c));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_GALICIAN", 0x56));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_GEORGIAN", 0x37));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_GERMAN", 0x07));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_GREEK", 0x08));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_HEBREW", 0x0d));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_HINDI", 0x39));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_HUNGARIAN", 0x0e));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_ICELANDIC", 0x0f));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_INDONESIAN", 0x21));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_ITALIAN", 0x10));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_JAPANESE", 0x11));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_KOREAN", 0x12));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_LATVIAN", 0x26));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_LITHUANIAN", 0x27));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_MACEDONIAN", 0x2f));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_MALAY", 0x3e));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_NORWEGIAN", 0x14));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_POLISH", 0x15));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_PORTUGUESE", 0x16));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_ROMANIAN", 0x18));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_RUSSIAN", 0x19));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_SERBIAN", 0x1a));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_SLOVAK", 0x1b));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_SLOVENIAN", 0x24));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_SPANISH", 0x0a));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_SWEDISH", 0x1d));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_THAI", 0x1e));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_TURKISH", 0x1f));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_UKRAINIAN", 0x22));
-            lstLanguageInfo.Add(new LanguageInfo("LANG_VIETNAMESE", 0x2a)); 
-            comboBoxLanguage.DisplayMember = "Language";
-            comboBoxLanguage.ValueMember = "HexValue";  
-            comboBoxLanguage.DataSource = lstLanguageInfo;
         }
 
         private void buttonBrowserSlpDir_Click(object sender, EventArgs e)
@@ -398,17 +346,44 @@ namespace voobly_drs_merger
                 textBoxLanguagedll.Text = LanguageDll;
             }
         }
+        private bool executeProcess(string cmd, string exe)
+        {
+            try
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = exe;
+                startInfo.Arguments = cmd;
+                startInfo.UseShellExecute = false;
+
+                using (Process process = Process.Start(startInfo))
+                {
+                    Console.WriteLine($"Executing: rh.exe with arguments: \"{cmd}\"");
+                    process.WaitForExit();
+                    Console.WriteLine($"Process exited with code: {process.ExitCode}");
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            } 
+        }
 
         private void buttonLangIni_Click(object sender, EventArgs e)
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-
+            Cursor.Current = Cursors.WaitCursor; 
+            //https://www.voobly.com/pages/view/289/Game-Mod-Guide#Language_DLL_to_INI_Conversion_Tool
+            if (!File.Exists("langconv.exe"))
+            {
+                File.WriteAllBytes("langconv.exe", Resource1.langconv);
+            }
             // Create a new instance of SaveFileDialog
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 // Set properties for the dialog
-                saveFileDialog.Filter = "Text Files (*.ini)|*.ini";
+                saveFileDialog.Filter = "Language ini (*.ini)|*.ini";
                 saveFileDialog.Title = "Save your file";
                 if(string.IsNullOrEmpty(LanguageDll))
                     saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -424,8 +399,9 @@ namespace voobly_drs_merger
                     LanguageIni = saveFileDialog.FileName;
 
                     try
-                    {
-                        DllResourceExtractor.ExtractAllResources(LanguageDll, LanguageIni);
+                    { 
+                        string cmd = $" -d  \"{LanguageIni}\" \"{LanguageDll}\"";
+                        executeProcess(cmd, "langconv.exe");
                     }
                     catch (Exception ex)
                     {
@@ -437,6 +413,8 @@ namespace voobly_drs_merger
                     MessageBox.Show("Save operation cancelled by the user.", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+            Cursor.Current = Cursors.Default;
+            MessageBox.Show("Done.");
         }
 
         private void tabControl_Selected(object sender, TabControlEventArgs e)
@@ -444,7 +422,9 @@ namespace voobly_drs_merger
 
             buttonRestoreMod.Visible = e.TabPageIndex == 0;
             mergeVooblyMod.Visible = e.TabPageIndex == 0;
-            browserAoe2.Visible = e.TabPageIndex == 0;  
+            browserAoe2.Visible = e.TabPageIndex == 0;
+            this.BackColor = Color.SteelBlue;
+            this.tabPageLanginidll.BackColor = Color.SteelBlue;
         }
 
         private void buttonRestoreMod_Click(object sender, EventArgs e)
@@ -468,72 +448,160 @@ namespace voobly_drs_merger
             } 
         }
 
+        private bool readRhLog()
+        {
+            bool hasAnError= true;
+            if (File.Exists("rh.log"))
+            {
+                string[] logs = File.ReadAllLines("rh.log", Encoding.GetEncoding("iso-8859-1"));
+                string txtLog = string.Empty;
+                foreach (string l in logs)
+                {
+                    txtLog += l.Replace("\0", "")+Environment.NewLine;
+                    if (l.Replace("\0", "").Contains("Success!"))
+                    {
+                        hasAnError= false;
+                    }
+                }
+                richTextBoxLogs.Text = txtLog;
+
+            }
+            return hasAnError;
+        }
+
         private void buttonSaveLanguageDll_Click(object sender, EventArgs e)
-        {  
+        {
+            string cmd = string.Empty;
+            Cursor.Current = Cursors.WaitCursor;
             StringBuilder sb = new StringBuilder(); 
             string pathRc = LanguageIni.Replace(".ini", ".rc");
             string pathRes = LanguageIni.Replace(".ini", ".res");
 
-             
+            // Create a new instance of SaveFileDialog
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                // Set properties for the dialog
+                saveFileDialog.Filter = "Language (*.dll)|*.dll";
+                saveFileDialog.Title = "Save your file";
+                if (string.IsNullOrEmpty(LanguageDll))
+                    saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                else
+                    saveFileDialog.InitialDirectory = Path.GetDirectoryName(LanguageDll);// Environment.SpecialFolder.MyDocuments);
+                saveFileDialog.DefaultExt = "dll"; // Default extension if user doesn't specify one
+                saveFileDialog.AddExtension = true; // Add the default extension if user omits it
+     
+                // Show the dialog and check if the user clicked OK
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Get the selected file path
+                    LanguageDll = saveFileDialog.FileName;
+                    textBoxLangdll.Text = LanguageDll;
+                }
+                else
+                {
+                    MessageBox.Show("Save operation cancelled by the user.", "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Cursor.Current = Cursors.Default; 
+                    return;
+                }
+            }
             if (string.IsNullOrEmpty(LanguageIni))
             {
                 MessageBox.Show("Browser language ini file .");
                 return;
-            } 
+            }
             List<string> lst = File.ReadAllLines(LanguageIni, Encoding.UTF8).ToList();
-            if(lst.Count() == 0)
+            if (lst.Count() == 0)
             {
-                MessageBox.Show("empty file ."); 
+                MessageBox.Show("empty file .");
                 return;
             }
+            if (string.IsNullOrEmpty(LanguageDll))
+            {
+                MessageBox.Show("LANGUAGE DLL doesn't exist .");
+                return;
+            }
+            ///////////////////////////////////////////////////////////////////////////
+            Regex regex = new Regex(Regex.Escape("="));
             sb.AppendLine("STRINGTABLE");
-            sb.AppendLine($"LANGUAGE {comboBoxLanguage.SelectedItem}, 1 ");
-            sb.AppendLine("{");
+            if (!string.IsNullOrEmpty(LanguageDll))
+            { 
+                //we read the language from dll
+                cmd = $"-open \"{this.LanguageDll}\"  -save lang.rc  -action extract -mask STRINGTABLE,,";
+                executeProcess(cmd, @"rh.exe"); 
+                if(File.Exists("lang.rc"))
+                { 
+                    string languageFromDll = File.ReadAllLines("lang.rc").ElementAt(1);
+                    sb.AppendLine(languageFromDll);
+                }
+                else
+                {
+                    sb.AppendLine("LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US");
+                }
+            }
+            else //empty language dll
+            { 
+                sb.AppendLine("LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US");
+            }
+             sb.AppendLine("{");
             foreach (var l in lst)
             {
-                ushort id = 0; 
+                ushort id = 0;
                 string stringvalue = l.Split('=').LastOrDefault();
                 if (ushort.TryParse(l.Split('=').First(), out id))
                 {
-                    //if (id ==19705)
-                    //{
-                    //    stringvalue = stringvalue.Replace(@"\\", "\\\\");
-                    //}
-                    //stringvalue = stringvalue.Replace(@"\\", "\\\\");
-                    sb.AppendLine($"{id},\"{stringvalue}\"");
+                    if (l.Contains("=") && !(l == Environment.NewLine))
+                    {
+                        string input = l.Replace("\"", "");
+                        if (l.Contains("="))
+                            input = regex.Replace(input, ", \t\"", 1);
+                        string str = input + "\" "; 
+                        sb.AppendLine(str);
+                    }
+
+                    //sb.AppendLine($"{id},\"{stringvalue}\"");
                 }
             }
             sb.AppendLine("}");
             File.WriteAllText(pathRc, sb.ToString(), Encoding.UTF8);
-            sb.Clear(); 
-            if(!File.Exists("rh.exe"))
+            sb.Clear();
+            ///////////////////////////////////////////////////////////////////////////
+            if (!File.Exists("rh.exe"))
             {
                 var rh = Resource1.RH;
                 File.WriteAllBytes("rh.exe", rh);
             }
             //rh.exe is https://www.angusj.com/resourcehacker/
-            string cmd = $" -open \"{pathRc}\" -save \"{pathRes}\" -action compile -log ";
-            try
+            cmd = $" -open \"{pathRc}\" -save \"{pathRes}\" -action compile -log ";
+            executeProcess(cmd, @"rh.exe");
+            if(readRhLog())
             {
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.FileName = @"rh.exe";
-                startInfo.Arguments = cmd;
-                startInfo.UseShellExecute = false;
-
-                using (Process process = Process.Start(startInfo))
-                {
-                    Console.WriteLine($"Executing: rh.exe with arguments: \"{cmd}\"");
-                    process.WaitForExit();
-                    Console.WriteLine($"Process exited with code: {process.ExitCode}");
-                }
+                Cursor.Current = Cursors.Default;
+                this.BackColor = Color.Red;
+                this.tabPageLanginidll.BackColor = Color.Red;
+                return;
             }
-            catch (Exception ex)
+            this.BackColor = Color.SteelBlue;
+            this.tabPageLanginidll.BackColor = Color.SteelBlue;
+
+            //generate script to build language dll
+            sb.Clear();
+            sb.AppendLine("[FILENAMES]");
+            sb.AppendLine($"Open=\"{this.LanguageDll}\"");
+            sb.AppendLine($"Save=\"{this.LanguageDll}\"");
+            sb.AppendLine("[COMMANDS]");
+            sb.AppendLine($"-addoverwrite \"{pathRes}\" , STRINGTABLE,,");
+            File.WriteAllText("myscript.txt", sb.ToString());
+            cmd = " -script myscript.txt";
+            executeProcess(cmd, @"rh.exe");
+
+            if(readRhLog())
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                this.BackColor = Color.Red;
+                this.tabPageLanginidll.BackColor = Color.Red;
             }
 
-
-
+            Cursor.Current = Cursors.Default;
+            MessageBox.Show("Done.");
         }
     }
 }

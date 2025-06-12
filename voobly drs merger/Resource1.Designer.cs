@@ -63,6 +63,16 @@ namespace voobly_drs_merger {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Byte[].
         /// </summary>
+        internal static byte[] langconv {
+            get {
+                object obj = ResourceManager.GetObject("langconv", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Byte[].
+        /// </summary>
         internal static byte[] RH {
             get {
                 object obj = ResourceManager.GetObject("RH", resourceCulture);

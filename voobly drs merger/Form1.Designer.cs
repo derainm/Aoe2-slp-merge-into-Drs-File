@@ -42,6 +42,7 @@
             this.buttonLangIni = new System.Windows.Forms.Button();
             this.textBoxLanguagedll = new System.Windows.Forms.TextBox();
             this.tabPageLanginidll = new System.Windows.Forms.TabPage();
+            this.textBoxLangdll = new System.Windows.Forms.TextBox();
             this.buttonSaveLanguageDll = new System.Windows.Forms.Button();
             this.buttonBrowserLangIni = new System.Windows.Forms.Button();
             this.textBoxLangIni = new System.Windows.Forms.TextBox();
@@ -50,9 +51,7 @@
             this.buttonRestoreMod = new System.Windows.Forms.Button();
             this.mergeVooblyMod = new System.Windows.Forms.Button();
             this.browserAoe2 = new System.Windows.Forms.Button();
-            this.textBoxLangdll = new System.Windows.Forms.TextBox();
-            this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.richTextBoxLogs = new System.Windows.Forms.RichTextBox();
             this.tabControl.SuspendLayout();
             this.SlpIntoDrs.SuspendLayout();
             this.tabPagelangdllIni.SuspendLayout();
@@ -216,8 +215,7 @@
             // tabPageLanginidll
             // 
             this.tabPageLanginidll.BackColor = System.Drawing.Color.SteelBlue;
-            this.tabPageLanginidll.Controls.Add(this.label1);
-            this.tabPageLanginidll.Controls.Add(this.comboBoxLanguage);
+            this.tabPageLanginidll.Controls.Add(this.richTextBoxLogs);
             this.tabPageLanginidll.Controls.Add(this.textBoxLangdll);
             this.tabPageLanginidll.Controls.Add(this.buttonSaveLanguageDll);
             this.tabPageLanginidll.Controls.Add(this.buttonBrowserLangIni);
@@ -228,6 +226,15 @@
             this.tabPageLanginidll.Size = new System.Drawing.Size(930, 469);
             this.tabPageLanginidll.TabIndex = 3;
             this.tabPageLanginidll.Text = "language ini -> language dll ";
+            // 
+            // textBoxLangdll
+            // 
+            this.textBoxLangdll.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textBoxLangdll.Location = new System.Drawing.Point(206, 198);
+            this.textBoxLangdll.Name = "textBoxLangdll";
+            this.textBoxLangdll.ReadOnly = true;
+            this.textBoxLangdll.Size = new System.Drawing.Size(613, 20);
+            this.textBoxLangdll.TabIndex = 22;
             // 
             // buttonSaveLanguageDll
             // 
@@ -323,33 +330,13 @@
             this.browserAoe2.UseVisualStyleBackColor = false;
             this.browserAoe2.Click += new System.EventHandler(this.browserAoe2_Click);
             // 
-            // textBoxLangdll
+            // richTextBoxLogs
             // 
-            this.textBoxLangdll.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.textBoxLangdll.Location = new System.Drawing.Point(206, 198);
-            this.textBoxLangdll.Name = "textBoxLangdll";
-            this.textBoxLangdll.ReadOnly = true;
-            this.textBoxLangdll.Size = new System.Drawing.Size(613, 20);
-            this.textBoxLangdll.TabIndex = 22;
-            // 
-            // comboBoxLanguage
-            // 
-            this.comboBoxLanguage.FormattingEnabled = true;
-            this.comboBoxLanguage.Location = new System.Drawing.Point(206, 69);
-            this.comboBoxLanguage.Name = "comboBoxLanguage";
-            this.comboBoxLanguage.Size = new System.Drawing.Size(203, 21);
-            this.comboBoxLanguage.TabIndex = 23;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.White;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(85, 70);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 20);
-            this.label1.TabIndex = 24;
-            this.label1.Text = "Language";
+            this.richTextBoxLogs.Location = new System.Drawing.Point(28, 242);
+            this.richTextBoxLogs.Name = "richTextBoxLogs";
+            this.richTextBoxLogs.Size = new System.Drawing.Size(791, 206);
+            this.richTextBoxLogs.TabIndex = 23;
+            this.richTextBoxLogs.Text = "";
             // 
             // Form1
             // 
@@ -399,8 +386,7 @@
         private System.Windows.Forms.Button buttonBrowserLangIni;
         private System.Windows.Forms.TextBox textBoxLangIni;
         private System.Windows.Forms.TextBox textBoxLangdll;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBoxLanguage;
+        private System.Windows.Forms.RichTextBox richTextBoxLogs;
     }
 }
 
