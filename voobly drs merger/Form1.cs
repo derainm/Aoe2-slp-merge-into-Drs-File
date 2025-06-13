@@ -187,8 +187,8 @@ namespace voobly_drs_merger
                         int num4 = i + 1;
                         Button button = new Button();
                         button.Text = "Merge";
-                        button.Name = "validation";
-                        button.Tag = (object)"validation";
+                        button.Name = "Merge";
+                        button.Tag = (object)"Merge";
                         button.AutoSize = true;
                         button.Size = new Size(123, 49);
                         int num5 = num4 + 1;
@@ -291,7 +291,7 @@ namespace voobly_drs_merger
                     //Drs a lot of voobly mod has only drs folder with slp -> we need  drs compilation to make it offline
                     string slpDataMods = Path.Combine(dataMod, "drs");
                     string drsDataMods = Path.Combine(dataModData, "gamedata_x1_p1.drs");
-                    string drsDataModsSVG = Path.Combine(dataModData, "gamedata_x1_p1_Originale.drs");
+                    string drsDataModsSVG = Path.Combine(dataModData, "gamedata_x1_p1_Original.drs");
                     if(File.Exists(drsDataMods) && !File.Exists(drsDataModsSVG) )
                     {
                         File.Copy(drsDataMods, drsDataModsSVG);
@@ -418,8 +418,51 @@ namespace voobly_drs_merger
                 }
             }
         }
- 
-      
+
+        private void buttonRestoreAsBefore_Click(object sender, EventArgs e)
+        {
+            foreach (object control in this.formm.Controls)
+            {
+                if (control.GetType() == typeof(RadioButton) && ((RadioButton)control).Checked)
+                {
+                    if (((Control)control).Text == "Your local Aoe2")
+                    {
+                        string dataPath = Path.Combine(Aoe2Path, "Data");
+                        foreach(var f in Directory.GetFiles(dataPath).Where(x=>x.EndsWith(".drs")))
+                        {
+                            if(f.Contains("_Original.drs"))
+                            {
+                                var drs = f.Replace("_Original", "");
+                                File.Copy(f, drs,true);
+                            }
+                        }
+                    }
+                    else
+                    { 
+                        string dataPath = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Data Mods", ((Control)control).Text, "Data");
+                        foreach (var f in Directory.GetFiles(dataPath).Where(x => x.EndsWith(".drs")))
+                        {
+                            if (f.Contains("_Original.drs"))
+                            {
+                                var drs = f.Replace("_Original", "");
+                                File.Copy(f, drs, true);
+                            }
+                        }
+                        if (tabControl.SelectedIndex == 4)
+                        {
+                            string gamesPath = Path.Combine(this.Aoe2Path, @"Games");
+                            //we disable data mode connection
+                            string civXml = Path.Combine(gamesPath, "age2_x1.xml");
+                            if (File.Exists(civXml))
+                            {
+                                File.Delete(civXml);
+                            }
+                        }
+                    }
+                }
+            }
+            MessageBox.Show("Done.");
+        }
         private void buttonDrsChoice_Click(object sender, EventArgs e)
         {
             int num1 = 0;
@@ -541,7 +584,7 @@ namespace voobly_drs_merger
             if(e.TabPageIndex == 4)
             {
                 mergeVooblyMod.Text = "Switch data mod Offline";
-                buttonRestoreMod.Visible = false;
+                //buttonRestoreMod.Visible = false;
             }
              
             this.BackColor = Color.SteelBlue;
@@ -550,7 +593,56 @@ namespace voobly_drs_merger
 
         private void buttonRestoreMod_Click(object sender, EventArgs e)
         {
+            if (tabControl.SelectedIndex == 0|| tabControl.SelectedIndex == 4)
+            {
+                if (string.IsNullOrEmpty(this.Aoe2Path))
+                {
+                    MessageBox.Show("Browser Age of Empire II !");
+                    return;
+                }
 
+                VooblyModsPath = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Data Mods");
+                List<string> list = Directory.GetDirectories(VooblyModsPath).ToList();
+                if(list.Count() == 0 )
+                {
+                    MessageBox.Show("No Game Data mods to restore !");
+                    return;
+                }
+                int i = 0;
+                foreach (string str in list)
+                {
+                    RadioButton radioButton = new RadioButton();
+                    radioButton.Tag = str.Split('\\').Last() + i.ToString();
+                    radioButton.Text = str.Split('\\').Last();
+                    radioButton.AutoSize = true;
+                    radioButton.Location = new Point(10, i * 20);
+                    this.formm.Controls.Add((Control)radioButton);
+                    i++;
+                }
+                RadioButton radioButton1 = new RadioButton();
+                radioButton1.Tag = (object)"Your local Aoe2";
+                radioButton1.Text = "Your local Aoe2";
+                radioButton1.AutoSize = true;
+                radioButton1.Location = new Point(10, i * 20);
+                this.formm.Controls.Add((Control)radioButton1);
+                int num4 = i + 1;
+                Button button = new Button();
+                button.Text = "Restore";
+                button.Name = "Restore";
+                button.Tag = (object)"Restore";
+                button.AutoSize = true;
+                button.Size = new Size(123, 49);
+                int num5 = num4 + 1;
+                button.Location = new Point(10, num5 * 21);
+                button.Click += new EventHandler(this.buttonRestoreAsBefore_Click);
+                this.formm.Controls.Add((Control)button);
+                this.formm.StartPosition = FormStartPosition.CenterScreen;
+                this.formm.AutoScroll = true;
+                this.formm.MinimumSize = new Size(400, 400);
+                if (this.formm.ShowDialog() != DialogResult.Cancel)
+                    return;
+   
+            }
         }
 
         private void buttonBrowserLangIni_Click(object sender, EventArgs e)
