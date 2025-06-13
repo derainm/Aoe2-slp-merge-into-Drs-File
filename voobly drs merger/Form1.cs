@@ -77,32 +77,66 @@ namespace voobly_drs_merger
             else
             {
                 return;
-            } 
-            //clear check box mods 
-            this.removeTextBowModWhenRebrowserGame();
-            VooblyModsPath = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Local Mods");
-            if (!Directory.Exists(VooblyModsPath))
-            {
-                MessageBox.Show(VooblyModsPath + " is missing try again!");
             }
-            else
+                //clear check box mods 
+                this.removeTextBowModWhenRebrowserGame();
+            if (tabControl.SelectedIndex == 0)
             {
-                List<string> list = Directory.GetDirectories(VooblyModsPath).ToList();
-                int i = 0;
-                foreach (string p in list)
+                VooblyModsPath = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Local Mods");
+                if (!Directory.Exists(VooblyModsPath))
                 {
-                    var drsMods = Path.Combine(p, "drs");
-                    var ini = Path.Combine(p, "version.ini");
-                    if (Directory.Exists(drsMods) && File.Exists(ini))
+                    MessageBox.Show(VooblyModsPath + " is missing try again!");
+                }
+                else
+                {
+                    List<string> list = Directory.GetDirectories(VooblyModsPath).ToList();
+                    int i = 0;
+                    foreach (string p in list)
                     {
-                        CheckBox checkBox = new CheckBox();
-                        checkBox.Tag = "mods_" + p.Split('\\').Last();
-                        checkBox.Name = "mods_" + p.Split('\\').Last();
-                        checkBox.Text = p.Split('\\').Last();
-                        checkBox.AutoSize = true;
-                        checkBox.Location = new Point(10, i * 20);
-                        this.tabControl.Controls["VooblyMods"].Controls.Add((Control)checkBox);
-                        i++;
+                        var drsMods = Path.Combine(p, "drs");
+                        var ini = Path.Combine(p, "version.ini");
+                        if (Directory.Exists(drsMods) && File.Exists(ini))
+                        {
+                            CheckBox checkBox = new CheckBox();
+                            checkBox.Tag = "mods_" + p.Split('\\').Last();
+                            checkBox.Name = "mods_" + p.Split('\\').Last();
+                            checkBox.Text = p.Split('\\').Last();
+                            checkBox.AutoSize = true;
+                            checkBox.Location = new Point(10, i * 20);
+                            this.tabControl.Controls["VooblyMods"].Controls.Add((Control)checkBox);
+                            i++;
+                        }
+                    }
+                }
+            }
+            if (tabControl.SelectedIndex == 4)
+            { 
+                //clear check box mods 
+                this.removeTextBowModWhenRebrowserGame();
+                VooblyModsPath = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Data Mods");
+                if (!Directory.Exists(VooblyModsPath))
+                {
+                    MessageBox.Show(VooblyModsPath + " is missing try again!");
+                }
+                else
+                {
+                    List<string> list = Directory.GetDirectories(VooblyModsPath).ToList();
+                    int i = 0;
+                    foreach (string p in list)
+                    {
+                        var drsMods = Path.Combine(p, "drs");
+                        var ini = Path.Combine(p, "version.ini");
+                        if (Directory.Exists(drsMods) && File.Exists(ini))
+                        {
+                            RadioButton checkBox = new RadioButton();
+                            checkBox.Tag = "data_mods_" + p.Split('\\').Last();
+                            checkBox.Name = "data_mods_" + p.Split('\\').Last();
+                            checkBox.Text = p.Split('\\').Last();
+                            checkBox.AutoSize = true;
+                            checkBox.Location = new Point(10, i * 20);
+                            this.tabControl.Controls["tabPageSwitchDataMods"].Controls.Add((Control)checkBox);
+                            i++;
+                        }
                     }
                 }
             }
@@ -112,67 +146,160 @@ namespace voobly_drs_merger
             selectedMods = new List<string>();
             if (string.IsNullOrEmpty(this.Aoe2Path))
             {
-                MessageBox.Show("browser Age of Empire II !");
+                MessageBox.Show("Browser Age of Empire II !");
+                return;
             }
             else
             {
-                foreach (CheckBox control in this.tabControl.Controls["VooblyMods"].Controls)
+                if (tabControl.SelectedIndex == 0)
                 {
-                    if (control.GetType() == typeof(CheckBox) && control.Checked)
-                        selectedMods.Add(control.Text);
-                }
-                if (this.selectedMods.Count == 0)
-                {
-                    MessageBox.Show("select a voobly mods please!!");
-                }
-                else
-                {
-                    VooblyModsPath = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Data Mods");
-                    List<string> list = Directory.GetDirectories(VooblyModsPath).ToList();
-                    int i = 0;
-                    foreach (string str in list)
+                    foreach (CheckBox control in this.tabControl.Controls["VooblyMods"].Controls)
                     {
-                        RadioButton radioButton = new RadioButton();
-                        radioButton.Tag = str.Split('\\').Last() + i.ToString();
-                        radioButton.Text = str.Split('\\').Last();
-                        radioButton.AutoSize = true;
-                        radioButton.Location = new Point(10, i * 20);
-                        this.formm.Controls.Add((Control)radioButton);
-                        i++;
+                        if (control.GetType() == typeof(CheckBox) && control.Checked)
+                            selectedMods.Add(control.Text);
                     }
-                    RadioButton radioButton1 = new RadioButton();
-                    radioButton1.Tag = (object)"Your local Aoe2";
-                    radioButton1.Text = "Your local Aoe2";
-                    radioButton1.AutoSize = true;
-                    radioButton1.Location = new Point(10, i * 20);
-                    this.formm.Controls.Add((Control)radioButton1);
-                    int num4 = i + 1;
-                    Button button = new Button();
-                    button.Text = "Merge";
-                    button.Name = "validation";
-                    button.Tag = (object)"validation";
-                    button.AutoSize = true;
-                    button.Size = new Size(123, 49);
-                    int num5 = num4 + 1;
-                    button.Location = new Point(10, num5 * 21);
-                    button.Click += new EventHandler(this.buttonBrowserdataMod_Click);
-                    this.formm.Controls.Add((Control)button);
-                    this.formm.StartPosition = FormStartPosition.CenterScreen;
-                    this.formm.AutoScroll = true;
-                    this.formm.MinimumSize = new Size(400, 400);
-                    if (this.formm.ShowDialog() != DialogResult.Cancel)
-                        return;
-                    if (this.datamodsSelected.Count == 0)
+                    if (this.selectedMods.Count == 0)
                     {
-                        MessageBox.Show("Chose a Data Mods !!!");
+                        MessageBox.Show("Select a voobly mods please!!");
+                        return;
                     }
                     else
                     {
-                        this.selectedMods.Clear();
-                        this.datamodsSelected.Clear();
+                        VooblyModsPath = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Data Mods");
+                        List<string> list = Directory.GetDirectories(VooblyModsPath).ToList();
+                        int i = 0;
+                        foreach (string str in list)
+                        {
+                            RadioButton radioButton = new RadioButton();
+                            radioButton.Tag = str.Split('\\').Last() + i.ToString();
+                            radioButton.Text = str.Split('\\').Last();
+                            radioButton.AutoSize = true;
+                            radioButton.Location = new Point(10, i * 20);
+                            this.formm.Controls.Add((Control)radioButton);
+                            i++;
+                        }
+                        RadioButton radioButton1 = new RadioButton();
+                        radioButton1.Tag = (object)"Your local Aoe2";
+                        radioButton1.Text = "Your local Aoe2";
+                        radioButton1.AutoSize = true;
+                        radioButton1.Location = new Point(10, i * 20);
+                        this.formm.Controls.Add((Control)radioButton1);
+                        int num4 = i + 1;
+                        Button button = new Button();
+                        button.Text = "Merge";
+                        button.Name = "validation";
+                        button.Tag = (object)"validation";
+                        button.AutoSize = true;
+                        button.Size = new Size(123, 49);
+                        int num5 = num4 + 1;
+                        button.Location = new Point(10, num5 * 21);
+                        button.Click += new EventHandler(this.buttonBrowserdataMod_Click);
+                        this.formm.Controls.Add((Control)button);
+                        this.formm.StartPosition = FormStartPosition.CenterScreen;
+                        this.formm.AutoScroll = true;
+                        this.formm.MinimumSize = new Size(400, 400);
+                        if (this.formm.ShowDialog() != DialogResult.Cancel)
+                            return;
+                        if (this.datamodsSelected.Count == 0)
+                        {
+                            MessageBox.Show("Chose a Data Mods !!!");
+                            return;
+                        }
+                        else
+                        {
+                            this.selectedMods.Clear();
+                            this.datamodsSelected.Clear();
+                        }
                     }
                 }
+                if (tabControl.SelectedIndex == 4)
+                {
+                    //research data mod to switch
+                    string datamod = string.Empty;
+                    foreach (Control control in this.tabControl.Controls["tabPageSwitchDataMods"].Controls)
+                    {
+                        if (control.GetType() == typeof(RadioButton) && ((RadioButton)control).Checked)
+                        {
+                            datamod = control.Text;
+                        }
+                    }
+                    if (string.IsNullOrEmpty(datamod))
+                    {
+                        MessageBox.Show("Select a voobly date mods please!!");
+                        return;
+                    }
+                    string aocPath = Path.Combine(this.Aoe2Path, @"Age2_x1");
+                    string gamesPath = Path.Combine(this.Aoe2Path, @"Games");
+                    string dataModFolder = Path.Combine(this.Aoe2Path, @"Voobly Mods\AOC\Data Mods");
+                    string dataMod = Path.Combine(dataModFolder, datamod);
+                    string dataModData = Path.Combine(dataMod, "Data");
+                    string languageIni = Path.Combine(dataMod, "language.ini");
+                    string languageIniDest = Path.Combine(aocPath, "language.ini");
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //copy civ xml 
+                    string civXml = Path.Combine(dataMod, "age2_x1.xml");
+                    string civXmlDest = Path.Combine(gamesPath, "age2_x1.xml");
+                    if(!Directory.Exists(gamesPath))
+                    {
+                        Directory.CreateDirectory(gamesPath);
+                        return;
+                    } 
+                    if(!File.Exists(civXml)) 
+                    {
+                        MessageBox.Show($"Age2_x1.xml is missing on {datamod}:{Environment.NewLine}{civXml}");
+                        return;
+                    }
+                    var age2_x1xml = civilization.XmlParserCiv(civXml);
+                    age2_x1xml.path =$@"..\Voobly Mods\AOC\Data Mods\{datamod}";
+                    //File.Copy(civXml, civXmlDest, true);
+
+                    civilization.XmlWriter(age2_x1xml, civXmlDest);
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //Language resource
+                    if (!File.Exists(languageIni))
+                    {
+                        MessageBox.Show($"Language ini is missing on {datamod}:{Environment.NewLine}{languageIni}");
+                        return;
+                    }
+                    if (checkBoxLanguageIni.Checked)
+                    { 
+                        File.Copy(languageIni, languageIniDest ,true); 
+                    }
+                    else// we compile language dll
+                    {
+                        string langDll = Path.Combine(Aoe2Path, "language.dll");
+                        string langDllTmp = langDll.Replace("language.dll", "languageTmp.dll");
+                        string langIni = Path.Combine(dataMod, "language.ini");
+                        if (File.Exists(langDll))
+                        {
+                            File.Copy(langDll, langDllTmp,true);
+                            //we copy language.dll to get language and we merge with language .ini
+                            //we generate .rec
+                            Language.compileLanguageRes(langIni, langDllTmp);
+                            //we compile language dll
+                            Language.compileLanguagedll(langDllTmp, langIni);
+                            //we copy language dll to Data folder to allow user patch read language dll
+                            string language_x1_p1 = Path.Combine(dataModData, "language_x1_p1.dll");
+                            File.Copy(langDllTmp, language_x1_p1,true);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Language.dll is miising on {Environment.NewLine}{gamesPath}"); 
+                        }
+                    }
+                    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //Drs a lot of voobly mod has only drs folder with slp -> we need  drs compilation to make it offline
+                    string slpDataMods = Path.Combine(dataMod, "drs");
+                    string drsDataMods = Path.Combine(dataModData, "gamedata_x1_p1.drs");
+                    string drsDataModsSVG = Path.Combine(dataModData, "gamedata_x1_p1_Originale.drs");
+                    if(File.Exists(drsDataMods) && !File.Exists(drsDataModsSVG) )
+                    {
+                        File.Copy(drsDataMods, drsDataModsSVG);
+                    }
+                    DrsUtilities.mergeFileIntoDrs(slpDataMods, drsDataMods);
+                }
             }
+            MessageBox.Show($"Done.");
         }
 
         private void buttonBrowserdataMod_Click(object sender, EventArgs e)
@@ -306,7 +433,7 @@ namespace voobly_drs_merger
             }
             if (num1 == 0)
             {
-                MessageBox.Show("chose a DRS File to merge Voobly mod !!");
+                MessageBox.Show("Chose a DRS File to merge Voobly mod !!");
             }
             else
                 this.form_.DialogResult = DialogResult.OK;
@@ -333,7 +460,7 @@ namespace voobly_drs_merger
  
         private void buttonLangDll_Click(object sender, EventArgs e)
         {
-            FileDialog.Filter = "language dll (*.dll)|*.dll";
+            FileDialog.Filter = "Language dll (*.dll)|*.dll";
             if (FileDialog.ShowDialog() == DialogResult.OK)
             {
                 LanguageDll = FileDialog.FileName;
@@ -345,30 +472,6 @@ namespace voobly_drs_merger
                 }
                 textBoxLanguagedll.Text = LanguageDll;
             }
-        }
-        private bool executeProcess(string cmd, string exe)
-        {
-            try
-            {
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.FileName = exe;
-                startInfo.Arguments = cmd;
-                startInfo.UseShellExecute = false;
-
-                using (Process process = Process.Start(startInfo))
-                {
-                    Console.WriteLine($"Executing: rh.exe with arguments: \"{cmd}\"");
-                    process.WaitForExit();
-                    Console.WriteLine($"Process exited with code: {process.ExitCode}");
-
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return false;
-            } 
         }
 
         private void buttonLangIni_Click(object sender, EventArgs e)
@@ -399,9 +502,8 @@ namespace voobly_drs_merger
                     LanguageIni = saveFileDialog.FileName;
 
                     try
-                    { 
-                        string cmd = $" -d  \"{LanguageIni}\" \"{LanguageDll}\"";
-                        executeProcess(cmd, "langconv.exe");
+                    {
+                        Language.generateLanguageIni(LanguageIni,LanguageDll);
                     }
                     catch (Exception ex)
                     {
@@ -418,11 +520,30 @@ namespace voobly_drs_merger
         }
 
         private void tabControl_Selected(object sender, TabControlEventArgs e)
-        { 
+        {
 
-            buttonRestoreMod.Visible = e.TabPageIndex == 0;
-            mergeVooblyMod.Visible = e.TabPageIndex == 0;
-            browserAoe2.Visible = e.TabPageIndex == 0;
+            if (e.TabPageIndex == 0 || e.TabPageIndex == 4)
+            {
+                buttonRestoreMod.Visible = true;
+                mergeVooblyMod.Visible = true;
+                browserAoe2.Visible = true;
+            }
+            else
+            {
+                buttonRestoreMod.Visible = false;
+                mergeVooblyMod.Visible = false;
+                browserAoe2.Visible = false; 
+            }
+            if (e.TabPageIndex == 0 )
+            {
+                mergeVooblyMod.Text = "Merge voobly mod to drs mod";
+            }
+            if(e.TabPageIndex == 4)
+            {
+                mergeVooblyMod.Text = "Switch data mod Offline";
+                buttonRestoreMod.Visible = false;
+            }
+             
             this.BackColor = Color.SteelBlue;
             this.tabPageLanginidll.BackColor = Color.SteelBlue;
         }
@@ -474,8 +595,6 @@ namespace voobly_drs_merger
             string cmd = string.Empty;
             Cursor.Current = Cursors.WaitCursor;
             StringBuilder sb = new StringBuilder(); 
-            string pathRc = LanguageIni.Replace(".ini", ".rc");
-            string pathRes = LanguageIni.Replace(".ini", ".res");
 
             // Create a new instance of SaveFileDialog
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
@@ -509,70 +628,14 @@ namespace voobly_drs_merger
                 MessageBox.Show("Browser language ini file .");
                 return;
             }
-            List<string> lst = File.ReadAllLines(LanguageIni, Encoding.UTF8).ToList();
-            if (lst.Count() == 0)
-            {
-                MessageBox.Show("empty file .");
-                return;
-            }
-            if (string.IsNullOrEmpty(LanguageDll))
-            {
-                MessageBox.Show("LANGUAGE DLL doesn't exist .");
-                return;
-            }
-            ///////////////////////////////////////////////////////////////////////////
-            Regex regex = new Regex(Regex.Escape("="));
-            sb.AppendLine("STRINGTABLE");
-            if (!string.IsNullOrEmpty(LanguageDll))
-            { 
-                //we read the language from dll
-                cmd = $"-open \"{this.LanguageDll}\"  -save lang.rc  -action extract -mask STRINGTABLE,,";
-                executeProcess(cmd, @"rh.exe"); 
-                if(File.Exists("lang.rc"))
-                { 
-                    string languageFromDll = File.ReadAllLines("lang.rc").ElementAt(1);
-                    sb.AppendLine(languageFromDll);
-                }
-                else
-                {
-                    sb.AppendLine("LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US");
-                }
-            }
-            else //empty language dll
-            { 
-                sb.AppendLine("LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US");
-            }
-             sb.AppendLine("{");
-            foreach (var l in lst)
-            {
-                ushort id = 0;
-                string stringvalue = l.Split('=').LastOrDefault();
-                if (ushort.TryParse(l.Split('=').First(), out id))
-                {
-                    if (l.Contains("=") && !(l == Environment.NewLine))
-                    {
-                        string input = l.Replace("\"", "");
-                        if (l.Contains("="))
-                            input = regex.Replace(input, ", \t\"", 1);
-                        string str = input + "\" "; 
-                        sb.AppendLine(str);
-                    }
 
-                    //sb.AppendLine($"{id},\"{stringvalue}\"");
-                }
-            }
-            sb.AppendLine("}");
-            File.WriteAllText(pathRc, sb.ToString(), Encoding.UTF8);
-            sb.Clear();
-            ///////////////////////////////////////////////////////////////////////////
             if (!File.Exists("rh.exe"))
             {
                 var rh = Resource1.RH;
                 File.WriteAllBytes("rh.exe", rh);
             }
-            //rh.exe is https://www.angusj.com/resourcehacker/
-            cmd = $" -open \"{pathRc}\" -save \"{pathRes}\" -action compile -log ";
-            executeProcess(cmd, @"rh.exe");
+            //compile .rc file into .res file
+            Language.compileLanguageRes(LanguageIni, LanguageDll); 
             if(readRhLog())
             {
                 Cursor.Current = Cursors.Default;
@@ -583,18 +646,9 @@ namespace voobly_drs_merger
             this.BackColor = Color.SteelBlue;
             this.tabPageLanginidll.BackColor = Color.SteelBlue;
 
-            //generate script to build language dll
-            sb.Clear();
-            sb.AppendLine("[FILENAMES]");
-            sb.AppendLine($"Open=\"{this.LanguageDll}\"");
-            sb.AppendLine($"Save=\"{this.LanguageDll}\"");
-            sb.AppendLine("[COMMANDS]");
-            sb.AppendLine($"-addoverwrite \"{pathRes}\" , STRINGTABLE,,");
-            File.WriteAllText("myscript.txt", sb.ToString());
-            cmd = " -script myscript.txt";
-            executeProcess(cmd, @"rh.exe");
-
-            if(readRhLog())
+            //compile .res file into language.dll file
+            Language.compileLanguagedll(LanguageDll,LanguageIni); 
+            if (readRhLog())
             {
                 this.BackColor = Color.Red;
                 this.tabPageLanginidll.BackColor = Color.Red;
@@ -602,6 +656,11 @@ namespace voobly_drs_merger
 
             Cursor.Current = Cursors.Default;
             MessageBox.Show("Done.");
+        }
+
+        private void labelUp_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://userpatch.aiscripters.net/");
         }
     }
 }

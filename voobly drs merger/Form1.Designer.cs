@@ -42,20 +42,27 @@
             this.buttonLangIni = new System.Windows.Forms.Button();
             this.textBoxLanguagedll = new System.Windows.Forms.TextBox();
             this.tabPageLanginidll = new System.Windows.Forms.TabPage();
+            this.richTextBoxLogs = new System.Windows.Forms.RichTextBox();
             this.textBoxLangdll = new System.Windows.Forms.TextBox();
             this.buttonSaveLanguageDll = new System.Windows.Forms.Button();
             this.buttonBrowserLangIni = new System.Windows.Forms.Button();
             this.textBoxLangIni = new System.Windows.Forms.TextBox();
+            this.tabPageSwitchDataMods = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.checkBoxLanguageIni = new System.Windows.Forms.CheckBox();
+            this.labelUp = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.FolderDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.FileDialog = new System.Windows.Forms.OpenFileDialog();
             this.buttonRestoreMod = new System.Windows.Forms.Button();
             this.mergeVooblyMod = new System.Windows.Forms.Button();
             this.browserAoe2 = new System.Windows.Forms.Button();
-            this.richTextBoxLogs = new System.Windows.Forms.RichTextBox();
             this.tabControl.SuspendLayout();
             this.SlpIntoDrs.SuspendLayout();
             this.tabPagelangdllIni.SuspendLayout();
             this.tabPageLanginidll.SuspendLayout();
+            this.tabPageSwitchDataMods.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxSlpDir
@@ -128,6 +135,7 @@
             this.tabControl.Controls.Add(this.SlpIntoDrs);
             this.tabControl.Controls.Add(this.tabPagelangdllIni);
             this.tabControl.Controls.Add(this.tabPageLanginidll);
+            this.tabControl.Controls.Add(this.tabPageSwitchDataMods);
             this.tabControl.Location = new System.Drawing.Point(28, 23);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -227,6 +235,16 @@
             this.tabPageLanginidll.TabIndex = 3;
             this.tabPageLanginidll.Text = "language ini -> language dll ";
             // 
+            // richTextBoxLogs
+            // 
+            this.richTextBoxLogs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.richTextBoxLogs.Location = new System.Drawing.Point(28, 242);
+            this.richTextBoxLogs.Name = "richTextBoxLogs";
+            this.richTextBoxLogs.Size = new System.Drawing.Size(791, 206);
+            this.richTextBoxLogs.TabIndex = 23;
+            this.richTextBoxLogs.Text = "";
+            // 
             // textBoxLangdll
             // 
             this.textBoxLangdll.BackColor = System.Drawing.SystemColors.AppWorkspace;
@@ -274,6 +292,76 @@
             this.textBoxLangIni.Size = new System.Drawing.Size(613, 20);
             this.textBoxLangIni.TabIndex = 21;
             // 
+            // tabPageSwitchDataMods
+            // 
+            this.tabPageSwitchDataMods.BackColor = System.Drawing.Color.SteelBlue;
+            this.tabPageSwitchDataMods.Controls.Add(this.label3);
+            this.tabPageSwitchDataMods.Controls.Add(this.label2);
+            this.tabPageSwitchDataMods.Controls.Add(this.checkBoxLanguageIni);
+            this.tabPageSwitchDataMods.Controls.Add(this.labelUp);
+            this.tabPageSwitchDataMods.Controls.Add(this.label1);
+            this.tabPageSwitchDataMods.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSwitchDataMods.Name = "tabPageSwitchDataMods";
+            this.tabPageSwitchDataMods.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSwitchDataMods.Size = new System.Drawing.Size(930, 469);
+            this.tabPageSwitchDataMods.TabIndex = 4;
+            this.tabPageSwitchDataMods.Text = "Switch Data Mods";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(723, 115);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "if it is installed";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(723, 96);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(180, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Aoe2 patch will manage language ini";
+            // 
+            // checkBoxLanguageIni
+            // 
+            this.checkBoxLanguageIni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxLanguageIni.AutoSize = true;
+            this.checkBoxLanguageIni.Location = new System.Drawing.Point(708, 73);
+            this.checkBoxLanguageIni.Name = "checkBoxLanguageIni";
+            this.checkBoxLanguageIni.Size = new System.Drawing.Size(213, 17);
+            this.checkBoxLanguageIni.TabIndex = 2;
+            this.checkBoxLanguageIni.Text = "Language Ini don\'t compile language dll";
+            this.checkBoxLanguageIni.UseVisualStyleBackColor = true;
+            // 
+            // labelUp
+            // 
+            this.labelUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelUp.AutoSize = true;
+            this.labelUp.BackColor = System.Drawing.Color.White;
+            this.labelUp.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.labelUp.Location = new System.Drawing.Point(705, 40);
+            this.labelUp.Name = "labelUp";
+            this.labelUp.Size = new System.Drawing.Size(158, 13);
+            this.labelUp.TabIndex = 1;
+            this.labelUp.Text = "https://userpatch.aiscripters.net";
+            this.labelUp.Click += new System.EventHandler(this.labelUp_Click);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(705, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(197, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "work only with verison user patch >= 1.5";
+            // 
             // FolderDialog
             // 
             this.FolderDialog.ShowNewFolderButton = false;
@@ -310,7 +398,7 @@
             this.mergeVooblyMod.Name = "mergeVooblyMod";
             this.mergeVooblyMod.Size = new System.Drawing.Size(184, 49);
             this.mergeVooblyMod.TabIndex = 21;
-            this.mergeVooblyMod.Text = "merge voobly mod to drs mod";
+            this.mergeVooblyMod.Text = "Merge voobly mod to drs mod";
             this.mergeVooblyMod.UseVisualStyleBackColor = false;
             this.mergeVooblyMod.Click += new System.EventHandler(this.mergeVooblyMod_Click);
             // 
@@ -329,14 +417,6 @@
             this.browserAoe2.Text = "Browser Aoe2 folder";
             this.browserAoe2.UseVisualStyleBackColor = false;
             this.browserAoe2.Click += new System.EventHandler(this.browserAoe2_Click);
-            // 
-            // richTextBoxLogs
-            // 
-            this.richTextBoxLogs.Location = new System.Drawing.Point(28, 242);
-            this.richTextBoxLogs.Name = "richTextBoxLogs";
-            this.richTextBoxLogs.Size = new System.Drawing.Size(791, 206);
-            this.richTextBoxLogs.TabIndex = 23;
-            this.richTextBoxLogs.Text = "";
             // 
             // Form1
             // 
@@ -358,6 +438,8 @@
             this.tabPagelangdllIni.PerformLayout();
             this.tabPageLanginidll.ResumeLayout(false);
             this.tabPageLanginidll.PerformLayout();
+            this.tabPageSwitchDataMods.ResumeLayout(false);
+            this.tabPageSwitchDataMods.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -387,6 +469,12 @@
         private System.Windows.Forms.TextBox textBoxLangIni;
         private System.Windows.Forms.TextBox textBoxLangdll;
         private System.Windows.Forms.RichTextBox richTextBoxLogs;
+        private System.Windows.Forms.TabPage tabPageSwitchDataMods;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelUp;
+        private System.Windows.Forms.CheckBox checkBoxLanguageIni;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }
 

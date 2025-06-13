@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aokbitmap.cs" />
+    <Compile Include="Civilization.cs" />
     <Compile Include="commandclass.cs" />
     <Compile Include="DrsFile.cs" />
     <Compile Include="Form1.cs">
@@ -54,6 +55,7 @@
     </Compile>
     <Compile Include="frame.cs" />
     <Compile Include="imagehandler.cs" />
+    <Compile Include="Language.cs" />
     <Compile Include="LanguageInfo.cs" />
     <Compile Include="Methods.cs" />
     <Compile Include="Program.cs" />
