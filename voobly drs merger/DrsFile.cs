@@ -307,25 +307,6 @@ namespace voobly_drs_merger
                 prec = d;
                 i++;
             }
-            /*
-            if (drsTableToUpdate.Exists(x => x.Type == (int)drstype.slp) && hasFileType(modPath, drstype.slp))
-            { 
-                drsTableToUpdate.Where(x => x.Type == (int)drstype.slp).First().Start = posSlp;
-            }
-            //wav
-            if(drsTableToUpdate.Exists(x => x.Type == (int)drstype.wav) && hasFileType(modPath, drstype.wav))
-            {
-                var slpDrsItemCount = drsTableToUpdate.Where(x => x.Type == (int)drstype.slp).First().Items.Count();    
-                drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Start = (uint)slpDrsItemCount * 12 + posSlp;
-            }
-            //bina
-            if (drsTableToUpdate.Exists(x => x.Type == (int)drstype.bina) &&  hasFileType(modPath, drstype.bina))
-            {
-                var posWav = drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Start;
-                var wavDrsItemCount = drsTableToUpdate.Where(x => x.Type == (int)drstype.wav).First().Items.Count();
-                drsTableToUpdate.Where(x => x.Type == (int)drstype.bina).First().Start = (uint)wavDrsItemCount * 12 + posWav;
-            }
-            */
         }
 
         private static string getFileExtention(int type)
