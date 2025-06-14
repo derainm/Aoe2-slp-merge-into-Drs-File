@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -31,7 +32,16 @@ namespace voobly_drs_merger
         private List<LanguageInfo> lstLanguageInfo = new List<LanguageInfo>();
         public Form1()
         { 
-            InitializeComponent(); 
+            InitializeComponent();
+            // Get the directory where the current executable is located
+            string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            // Get the full path to the currently executing assembly 
+            string assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            // Get the directory name from the assembly location
+            string appDir = Path.GetDirectoryName(assemblyLocation);
+            //fix bug copy file in C:\Windows\System32 instead of current directory
+            Environment.CurrentDirectory=appDir; 
+
         }
 
         private void buttonBrowserSlpDir_Click(object sender, EventArgs e)
@@ -267,6 +277,11 @@ namespace voobly_drs_merger
                     }
                     else// we compile language dll
                     {
+                        if (!File.Exists("rh.exe"))
+                        {
+                            var rh = Resource1.RH;
+                            File.WriteAllBytes("rh.exe", rh);
+                        }
                         string langDll = Path.Combine(Aoe2Path, "language.dll");
                         string langDllTmp = langDll.Replace("language.dll", "languageTmp.dll");
                         string langIni = Path.Combine(dataMod, "language.ini");
