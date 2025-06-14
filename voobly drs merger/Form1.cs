@@ -132,11 +132,12 @@ namespace voobly_drs_merger
                 {
                     List<string> list = Directory.GetDirectories(VooblyModsPath).ToList();
                     int i = 0;
+                    this.tabControl.Controls["tabPageSwitchDataMods"].Controls.Clear();
                     foreach (string p in list)
                     {
                         var drsMods = Path.Combine(p, "drs");
                         var ini = Path.Combine(p, "version.ini");
-                        if (Directory.Exists(drsMods) && File.Exists(ini))
+                        if ( File.Exists(ini))//Directory.Exists(drsMods) &&
                         {
                             RadioButton checkBox = new RadioButton();
                             checkBox.Tag = "data_mods_" + p.Split('\\').Last();
@@ -175,6 +176,7 @@ namespace voobly_drs_merger
                     }
                     else
                     {
+                        this.formm.Controls.Clear();
                         VooblyModsPath = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Data Mods");
                         List<string> list = Directory.GetDirectories(VooblyModsPath).ToList();
                         int i = 0;
@@ -210,16 +212,8 @@ namespace voobly_drs_merger
                         this.formm.MinimumSize = new Size(400, 400);
                         if (this.formm.ShowDialog() != DialogResult.Cancel)
                             return;
-                        if (this.datamodsSelected.Count == 0)
-                        {
-                            MessageBox.Show("Chose a Data Mods !!!");
-                            return;
-                        }
-                        else
-                        {
-                            this.selectedMods.Clear();
-                            this.datamodsSelected.Clear();
-                        }
+                        this.selectedMods.Clear();
+                        this.datamodsSelected.Clear();
                     }
                 }
                 if (tabControl.SelectedIndex == 4)
@@ -253,13 +247,18 @@ namespace voobly_drs_merger
                     {
                         Directory.CreateDirectory(gamesPath);
                         return;
-                    } 
-                    if(!File.Exists(civXml)) 
-                    {
-                        MessageBox.Show($"Age2_x1.xml is missing on {datamod}:{Environment.NewLine}{civXml}");
-                        return;
                     }
-                    var age2_x1xml = civilization.XmlParserCiv(civXml);
+                    configuration age2_x1xml = null;
+                    if (!File.Exists(civXml)) 
+                    {
+                        //MessageBox.Show($"Age2_x1.xml is missing on {datamod}:{Environment.NewLine}{civXml}");
+                        //return;
+                        age2_x1xml =civilization.defaultAocCivXmlParser();
+                    }
+                    else
+                    {
+                        age2_x1xml = civilization.XmlParserCiv(civXml);
+                    } 
                     age2_x1xml.path =$@"..\Voobly Mods\AOC\Data Mods\{datamod}";
                     //File.Copy(civXml, civXmlDest, true);
 
@@ -305,16 +304,19 @@ namespace voobly_drs_merger
                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
                     //Drs a lot of voobly mod has only drs folder with slp -> we need  drs compilation to make it offline
                     string slpDataMods = Path.Combine(dataMod, "drs");
-                    string drsDataMods = Path.Combine(dataModData, "gamedata_x1_p1.drs");
-                    string drsDataModsSVG = Path.Combine(dataModData, "gamedata_x1_p1_Original.drs");
-                    if(File.Exists(drsDataMods) && !File.Exists(drsDataModsSVG) )
+                    if (Directory.Exists(slpDataMods))
                     {
-                        File.Copy(drsDataMods, drsDataModsSVG);
+                        string drsDataMods = Path.Combine(dataModData, "gamedata_x1_p1.drs");
+                        string drsDataModsSVG = Path.Combine(dataModData, "gamedata_x1_p1_Original.drs");
+                        if (File.Exists(drsDataMods) && !File.Exists(drsDataModsSVG))
+                        {
+                            File.Copy(drsDataMods, drsDataModsSVG);
+                        }
+                        DrsUtilities.mergeFileIntoDrs(slpDataMods, drsDataMods);
                     }
-                    DrsUtilities.mergeFileIntoDrs(slpDataMods, drsDataMods);
+                    MessageBox.Show($"Done.");
                 }
             }
-            MessageBox.Show($"Done.");
         }
 
         private void buttonBrowserdataMod_Click(object sender, EventArgs e)
