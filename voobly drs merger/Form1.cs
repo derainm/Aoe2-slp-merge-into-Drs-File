@@ -78,6 +78,17 @@ namespace voobly_drs_merger
         {
             this.tabControl.Controls["VooblyMods"].Controls.Clear();
         }
+        private void removeTextBowModWhenRebrowserGameV2()
+        { 
+            //this.tabControl.Controls["tabPageSwitchDataMods"].Controls.Clear();
+            foreach(Control c in this.tabControl.Controls["tabPageSwitchDataMods"].Controls)
+            {
+                if (c.Name.Contains("data_mods_"))
+                { 
+                    this.tabControl.Controls["tabPageSwitchDataMods"].Controls.Remove(c);
+                }
+            }
+        }
         private void browserAoe2_Click(object sender, EventArgs e)
         {
             if (FolderDialog.ShowDialog() == DialogResult.OK)
@@ -122,7 +133,7 @@ namespace voobly_drs_merger
             if (tabControl.SelectedIndex == 4)
             { 
                 //clear check box mods 
-                this.removeTextBowModWhenRebrowserGame();
+                this.removeTextBowModWhenRebrowserGameV2();
                 VooblyModsPath = Path.Combine(Aoe2Path, "Voobly Mods\\AOC\\Data Mods");
                 if (!Directory.Exists(VooblyModsPath))
                 {
@@ -132,7 +143,6 @@ namespace voobly_drs_merger
                 {
                     List<string> list = Directory.GetDirectories(VooblyModsPath).ToList();
                     int i = 0;
-                    this.tabControl.Controls["tabPageSwitchDataMods"].Controls.Clear();
                     foreach (string p in list)
                     {
                         var drsMods = Path.Combine(p, "drs");
