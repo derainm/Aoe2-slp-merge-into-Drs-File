@@ -308,7 +308,7 @@ namespace voobly_drs_merger
                         }
                         else
                         {
-                            MessageBox.Show($"Language.dll is miising on {Environment.NewLine}{gamesPath}"); 
+                            MessageBox.Show($"Language.dll is missing on {Environment.NewLine}{gamesPath}"); 
                         }
                     }
                     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
