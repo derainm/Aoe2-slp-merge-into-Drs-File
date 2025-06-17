@@ -397,8 +397,8 @@ namespace voobly_drs_merger
                         radioButton2.Location = new Point(10, num4 * 20);
                         this.form_.Controls.Add((Control)radioButton2);
                         TextBox textBox = new TextBox(); 
-                        textBox.Text = "curstom.drs";
-                        //stextBox.Tag = "curstom.drs";
+                        textBox.Text = "custom.drs";
+                        //stextBox.Tag = "custom.drs";
                         textBox.AutoSize = true;
                         textBox.Location = new Point(10+15, num4 * 20);
                         this.form_.Controls.Add((Control)textBox);

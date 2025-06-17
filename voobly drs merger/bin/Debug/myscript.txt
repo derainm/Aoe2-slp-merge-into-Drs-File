@@ -1,0 +1,5 @@
+[FILENAMES]
+Open="C:\Users\mikael.derain\Documents\Visual Studio 2022\Nouveau dossier\Age of Empires II\languageTmp.dll"
+Save="C:\Users\mikael.derain\Documents\Visual Studio 2022\Nouveau dossier\Age of Empires II\languageTmp.dll"
+[COMMANDS]
+-addoverwrite "C:\Users\mikael.derain\Documents\Visual Studio 2022\Nouveau dossier\Age of Empires II\Voobly Mods\AOC\Data Mods\v1.6 Game Data\language.res" , STRINGTABLE,,
