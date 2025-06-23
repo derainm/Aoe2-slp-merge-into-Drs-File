@@ -33,14 +33,21 @@ namespace voobly_drs_merger
         public Form1()
         { 
             InitializeComponent();
-            // Get the directory where the current executable is located
-            string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            // Get the full path to the currently executing assembly 
-            string assemblyLocation = Assembly.GetExecutingAssembly().Location;
-            // Get the directory name from the assembly location
-            string appDir = Path.GetDirectoryName(assemblyLocation);
+            //// Get the directory where the current executable is located
+            //string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            //// Get the full path to the currently executing assembly 
+            //string assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            //// Get the directory name from the assembly location
+            //string appDir = Path.GetDirectoryName(assemblyLocation);
+            //read current directory look like it flag exe as virus 
+            //so we create a temp directory
+            string tmp = @"C:\temp";
+            if (!Directory.Exists(tmp))
+            {
+                Directory.CreateDirectory(tmp);
+            }
             //fix bug copy file in C:\Windows\System32 instead of current directory
-            Environment.CurrentDirectory=appDir; 
+            Environment.CurrentDirectory=tmp;// appDir; 
 
         }
 
